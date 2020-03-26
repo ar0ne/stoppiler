@@ -1,10 +1,16 @@
 package com.ar0ne.stoppiler.domain
 
-class Stock(val goods: MutableMap<Goods, Float> = mutableMapOf()) {
+class Stock(private val goods: MutableMap<Goods, Float> = mutableMapOf()) {
 
-    fun updateGoods(item: Goods, volume: Float) {
+    fun addGoods(item: Goods, volume: Float) {
         val currentVolume: Float = goods[item] ?: 0f
         goods[item] = currentVolume.plus(volume)
+    }
+
+    fun subtract(item: Goods, diff: Float = item.dailyRate) {
+        val currentVolume: Float = goods[item] ?: 0f
+        val updatedVolume = currentVolume.minus(diff)
+        goods[item] = if (updatedVolume > 0) updatedVolume else 0f
     }
 
     fun left(item: Goods): Float {
@@ -32,11 +38,17 @@ fun main() {
         type = GoodsType.WATER, name = "Orange Juice", dailyRate = .5f, unit = Units.LITER
     )
     val myStock = Stock()
-    myStock.updateGoods(toiletPaper, 120f)
-    myStock.updateGoods(buckwheat, 3f)
-    myStock.updateGoods(juice, 4f)
+    myStock.addGoods(toiletPaper, 120f)
+    myStock.addGoods(buckwheat, 3f)
+    myStock.addGoods(juice, 4f)
 
-    println(myStock.left(toiletPaper))
+//    println(myStock.left(toiletPaper))
     println(myStock.left(buckwheat))
-    println(myStock.left(juice))
+//    println(myStock.left(juice))
+
+    myStock.subtract(buckwheat, 0.3f)
+
+    println(myStock.left(buckwheat))
+
+
 }
