@@ -4,7 +4,7 @@ enum class Sex {
     MALE, FEMALE
 }
 
-class User(
+data class User(
     val name: String,
     val age: Int,
     val sex: Sex

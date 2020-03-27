@@ -1,8 +1,9 @@
-package com.ar0ne.stoppiler
+package com.ar0ne.stoppiler.activity
 
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.ar0ne.stoppiler.R
 
 
 class MainActivity : AppCompatActivity() {
