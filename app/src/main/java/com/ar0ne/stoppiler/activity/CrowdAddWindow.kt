@@ -5,26 +5,36 @@ import android.animation.AnimatorListenerAdapter
 import android.animation.ArgbEvaluator
 import android.animation.ValueAnimator
 import android.app.Activity
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.WindowManager
 import android.view.animation.DecelerateInterpolator
+import android.widget.CompoundButton
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.graphics.ColorUtils
 import com.ar0ne.stoppiler.R
+import com.ar0ne.stoppiler.domain.Sex
 import kotlinx.android.synthetic.main.crowd_add_person.*
 
-class CrowdAddWindow : AppCompatActivity() {
+class CrowdAddWindow : AppCompatActivity(), CompoundButton.OnCheckedChangeListener {
 
-    private var darkStatusBar = false
+    private var darkStatusBar = true
+
+    companion object {
+        val EXTRA_PERSON_NAME = "person_name"
+        val EXTRA_PERSON_AGE = "person_age"
+        val EXTRA_PERSON_SEX = "person_sex"
+    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         overridePendingTransition(0, 0)
         setContentView(R.layout.crowd_add_person)
 
+        crowd_person_sex_switch?.setOnCheckedChangeListener(this)
 
         if (darkStatusBar) {
             this.window.decorView.systemUiVisibility =
@@ -97,8 +107,22 @@ class CrowdAddWindow : AppCompatActivity() {
     }
 
     fun onSavePersonClicked(view: View) {
-        Log.d("LOG", "Save peson clicked")
+        val result = Intent()
+        val sex = if (crowd_person_sex_switch.isChecked) Sex.FEMALE else Sex.MALE
+        val name = crowd_person_name.text.toString()
+        val age = crowd_person_age.text.toString()
+        result.putExtra(EXTRA_PERSON_NAME, name)
+        result.putExtra(EXTRA_PERSON_AGE, age)
+        result.putExtra(EXTRA_PERSON_SEX, sex)
+        setResult(Activity.RESULT_OK, result)
         finish()
+    }
 
+    override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
+        if (isChecked) {
+            crowd_person_sex_switch.setText(R.string.crowd_person_female)
+        } else {
+            crowd_person_sex_switch.setText(R.string.crowd_person_male)
+        }
     }
 }

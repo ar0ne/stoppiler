@@ -11,6 +11,6 @@
     <string name="crowd.person_male">Male</string>
     <string name="crowd.person_female">Female</string>
     <string name="crowd.person_sex">Sex</string>
-    <string name="crowd.add.save">Save</string>
+    <string name="crowd.add.save">Add</string>
     <string name="crowd.add.cancel">Cancel</string>
 </resources>
