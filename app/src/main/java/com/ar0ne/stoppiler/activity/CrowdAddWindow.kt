@@ -23,9 +23,9 @@ class CrowdAddWindow : AppCompatActivity(), CompoundButton.OnCheckedChangeListen
     private var darkStatusBar = true
 
     companion object {
-        val EXTRA_PERSON_NAME = "person_name"
-        val EXTRA_PERSON_AGE = "person_age"
-        val EXTRA_PERSON_SEX = "person_sex"
+        const val EXTRA_PERSON_NAME = "person_name"
+        const val EXTRA_PERSON_AGE = "person_age"
+        const val EXTRA_PERSON_SEX = "person_sex"
     }
 
 
@@ -103,6 +103,7 @@ class CrowdAddWindow : AppCompatActivity(), CompoundButton.OnCheckedChangeListen
 
 
     fun onCancelAddCrowdClicked(view: View) {
+        setResult(Activity.RESULT_CANCELED)
         finish()
     }
 

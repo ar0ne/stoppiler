@@ -13,4 +13,6 @@
     <string name="crowd.person_sex">Sex</string>
     <string name="crowd.add.save">Add</string>
     <string name="crowd.add.cancel">Cancel</string>
+    <string name="crowd.person.remove.title">Confirm action</string>
+    <string name="crowd.person.remove.text">Would you like to remove this person?</string>
 </resources>
