@@ -1,7 +1,9 @@
 package com.ar0ne.stoppiler.activity
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import com.ar0ne.stoppiler.R
 import com.ar0ne.stoppiler.adapter.CrowdAdapter
 import com.ar0ne.stoppiler.domain.Sex
@@ -9,6 +11,8 @@ import com.ar0ne.stoppiler.domain.User
 import kotlinx.android.synthetic.main.activity_crowd.*
 
 class CrowdActivity : AppCompatActivity() {
+
+    val ADD_PERSON_REQUEST = 3
 
     private var users: List<User> = listOf(
         User("John", 23, Sex.MALE),
@@ -28,5 +32,16 @@ class CrowdActivity : AppCompatActivity() {
             })
         crowd_recycler_view.adapter = crowdAdapter
     }
+
+    fun onAddCrowdClicked(view: View) {
+        val intent = Intent(this, CrowdAddWindow::class.java)
+        startActivityForResult(intent, ADD_PERSON_REQUEST)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == ADD_PERSON_REQUEST) {
+        }
+    }
+
 
 }

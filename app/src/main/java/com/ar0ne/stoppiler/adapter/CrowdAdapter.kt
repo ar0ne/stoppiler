@@ -14,7 +14,7 @@ class CrowdAdapter(var users: List<User>, val callback: Callback) :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = MainHolder(
         LayoutInflater.from(parent.context).inflate(
-            R.layout.crowd_item_cardview,
+            R.layout.crowd_item,
             parent,
             false
         )
