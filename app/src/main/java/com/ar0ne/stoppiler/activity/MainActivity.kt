@@ -8,13 +8,16 @@ import com.ar0ne.stoppiler.R
 
 class MainActivity : AppCompatActivity() {
 
-    private var intoShown = false
-    private val SHOW_INTRO_REQUEST = 1
+    private var introShown = false
+
+    companion object {
+        const val SHOW_INTRO_REQUEST = 1
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        if (!intoShown) {
+        if (!introShown) {
             val intent = Intent(this, IntroActivity::class.java)
             startActivityForResult(intent, SHOW_INTRO_REQUEST)
         }
@@ -22,7 +25,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == SHOW_INTRO_REQUEST) {
-            intoShown = true
+            introShown = true
         }
     }
 

@@ -34,7 +34,7 @@ class CrowdAdapter(var users: List<User>, val callback: Callback) :
             personName.text = user.name
             personAge.text = user.age.toString()
             personSex.text = user.sex.toString()
-            personPhoto.setImageResource(R.mipmap.ic_launcher)
+            personPhoto.setImageResource(R.mipmap.ic_launcher_round)
             itemView.setOnClickListener {
                 if (adapterPosition != RecyclerView.NO_POSITION) callback.onItemClicked(users[adapterPosition])
             }

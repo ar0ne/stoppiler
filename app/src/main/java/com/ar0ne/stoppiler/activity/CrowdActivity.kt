@@ -40,7 +40,7 @@ class CrowdActivity : AppCompatActivity() {
         crowd_recycler_view.adapter = crowdAdapter
     }
 
-    fun onAddCrowdClicked(view: View) {
+    fun onAddPersonClicked(view: View) {
         val intent = Intent(this, CrowdAddWindow::class.java)
         startActivityForResult(intent, ADD_PERSON_REQUEST)
     }
@@ -76,6 +76,12 @@ class CrowdActivity : AppCompatActivity() {
             setNegativeButton(android.R.string.no) { dialog, which -> }
             show()
         }
+    }
+
+    fun onButtonNextClicked(view: View) {
+        val result = Intent()
+        setResult(MainActivity.SHOW_INTRO_REQUEST, result)
+        finish()
     }
 
 

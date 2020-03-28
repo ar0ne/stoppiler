@@ -102,7 +102,7 @@ class CrowdAddWindow : AppCompatActivity(), CompoundButton.OnCheckedChangeListen
     }
 
 
-    fun onCancelAddCrowdClicked(view: View) {
+    fun onCancelAddPersonClicked(view: View) {
         setResult(Activity.RESULT_CANCELED)
         finish()
     }
