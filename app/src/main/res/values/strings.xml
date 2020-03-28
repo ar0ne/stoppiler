@@ -18,4 +18,5 @@
     <string name="toilet.paper">Toilet Paper</string>
     <string name="food">Food</string>
     <string name="water">Water</string>
+    <string name="goods.add.title">Add goods</string>
 </resources>

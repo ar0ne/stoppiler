@@ -21,7 +21,7 @@ enum class Units {
 data class Goods(
     val name: String,
     val type: GoodsType,
-    val dailyRate: Float,
+    val dailyRate: Double,
     val unit: Units = Units.KILOGRAM,
     val priority: Priority = Priority.LOW
 )

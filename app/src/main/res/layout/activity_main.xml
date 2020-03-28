@@ -8,7 +8,7 @@
     tools:context=".activity.MainActivity">
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/main_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="50dp"
@@ -19,11 +19,12 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/main_card_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
-        tools:layout_editor_absoluteX="1dp" >
+        app:layout_constraintTop_toBottomOf="@+id/main_title"
+        tools:layout_editor_absoluteX="1dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -72,7 +73,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/main_water" />
 
             <ProgressBar
-                android:id="@+id/progressBar7"
+                android:id="@+id/water_progressBar"
                 style="?android:attr/progressBarStyleHorizontal"
                 android:layout_width="280dp"
                 android:layout_height="17dp"
@@ -81,16 +82,60 @@
                 app:layout_constraintTop_toTopOf="@+id/main_water" />
 
             <ProgressBar
-                android:id="@+id/progressBar8"
+                android:id="@+id/toiletPaper_progressBar"
                 style="?android:attr/progressBarStyleHorizontal"
                 android:layout_width="280dp"
                 android:layout_height="17dp"
-                app:layout_constraintEnd_toEndOf="@+id/progressBar7"
-                app:layout_constraintStart_toStartOf="@+id/progressBar7"
+                app:layout_constraintEnd_toEndOf="@+id/water_progressBar"
+                app:layout_constraintStart_toStartOf="@+id/water_progressBar"
                 app:layout_constraintTop_toTopOf="@+id/main_home" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/main_goods_recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@+id/main_card_view"
+        tools:layout_editor_absoluteX="0dp" />
+
+    <View
+        android:layout_width="409dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintBottom_toTopOf="@+id/main_goods_recyclerView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/main_card_view" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/main_add_goods"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="24dp"
+        android:clickable="true"
+        android:onClick="onButtonAddGoodsClicked"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@android:drawable/ic_input_add" />
+
+    <ImageButton
+        android:id="@+id/main_btn_crowd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:onClick="onButtonOpenCrowdClicked"
+        app:layout_constraintBottom_toTopOf="@+id/main_card_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@android:drawable/btn_star" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
