@@ -8,7 +8,7 @@ import android.util.Log
 import android.widget.AdapterView
 import android.widget.SearchView
 import com.ar0ne.stoppiler.R
-import com.ar0ne.stoppiler.adapter.GoodsAdapter
+import com.ar0ne.stoppiler.adapter.GoodsSearchAdapter
 import com.ar0ne.stoppiler.domain.Goods
 import com.ar0ne.stoppiler.domain.GoodsType
 import com.ar0ne.stoppiler.domain.Priority
@@ -17,10 +17,10 @@ import kotlinx.android.synthetic.main.activity_goods.*
 
 class GoodsActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
 
-    var goodsAdapter: GoodsAdapter? = null
+    private var goodsSearchAdapter: GoodsSearchAdapter? = null
 
     companion object {
-        var goods: MutableList<Goods> = mutableListOf(
+        var goods = mutableListOf(
             Goods("Bread", GoodsType.FOOD, 500.0, Units.GRAM, Priority.MEDIUM),
             Goods("Salat", GoodsType.FOOD, 200.0, Units.GRAM, Priority.LOW),
             Goods("Meat", GoodsType.FOOD, 400.0, Units.GRAM, Priority.MEDIUM),
@@ -37,9 +37,9 @@ class GoodsActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_goods)
 
-        goodsAdapter = GoodsAdapter(this, goods as ArrayList<Goods>)
+        goodsSearchAdapter = GoodsSearchAdapter(this, goods as ArrayList<Goods>)
 
-        goods_list_view.adapter = goodsAdapter
+        goods_list_view.adapter = goodsSearchAdapter
 
         search.setOnQueryTextListener(this)
 
@@ -58,7 +58,7 @@ class GoodsActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
     }
 
     override fun onQueryTextChange(newText: String): Boolean {
-        goodsAdapter?.filter(newText)
+        goodsSearchAdapter?.filter(newText)
         return false
     }
 
@@ -70,7 +70,12 @@ class GoodsActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
                 if (productName != null && volume != null && volume > 0) {
                     val product: Goods? = goods.find { it.name == productName }
                     product?.apply {
-                        Log.d("LOG", "Added: $this")
+                        Log.d("LOG-Goods", "Added: $this")
+                        val result = Intent()
+                        result.putExtra(EXTRA_GOODS_NAME, productName)
+                        result.putExtra(EXTRA_GOODS_VOLUME, volume)
+                        setResult(Activity.RESULT_OK, result)
+                        finish()
                     }
                 }
             }

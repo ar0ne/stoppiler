@@ -1,15 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    >
+    android:layout_height="wrap_content">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="16dp"
-        >
+        android:padding="16dp">
 
         <ImageView
             android:id="@+id/person_photo"
@@ -20,29 +17,26 @@
             android:layout_marginEnd="16dp" />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:id="@+id/person_name"
-            android:layout_toEndOf="@+id/person_photo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:textSize="30sp"
-            />
+            android:layout_toEndOf="@+id/person_photo"
+            android:textSize="30sp" />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:id="@+id/person_age"
-            android:layout_toEndOf="@+id/person_photo"
-            android:layout_below="@+id/person_name"
-            />
-
-        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/person_name"
+            android:layout_toEndOf="@+id/person_photo" />
+
+        <TextView
             android:id="@+id/person_sex"
-            android:layout_toEndOf="@+id/person_photo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/person_age"
-            />
+            android:layout_toEndOf="@+id/person_photo" />
 
     </RelativeLayout>
 
