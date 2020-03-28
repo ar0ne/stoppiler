@@ -1,18 +1,21 @@
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="ExtraTranslation">
     <string name="app_name">Stoppiler</string>
-    <string name="action_settings">Settings</string>
     <string name="intro.title">Hi there!</string>
     <string name="intro.text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</string>
-    <string name="intro.btn.next">Next</string>
+    <string name="next">Next</string>
     <string name="crowd.title">Crowd List</string>
     <string name="crowd.add.title">Add new person</string>
-    <string name="crowd.person_name">Name</string>
-    <string name="crowd.person_age">Age</string>
-    <string name="crowd.person_male">Male</string>
-    <string name="crowd.person_female">Female</string>
-    <string name="crowd.person_sex">Sex</string>
+    <string name="name">Name</string>
+    <string name="age">Age</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+    <string name="sex">Sex</string>
     <string name="crowd.add.save">Add</string>
     <string name="crowd.add.cancel">Cancel</string>
     <string name="crowd.person.remove.title">Confirm action</string>
     <string name="crowd.person.remove.text">Would you like to remove this person?</string>
+    <string name="main.title">Goods</string>
+    <string name="toilet.paper">Toilet Paper</string>
+    <string name="food">Food</string>
+    <string name="water">Water</string>
 </resources>

@@ -1,20 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".activity.MainActivity"
-    tools:showIn="@layout/activity_main">
+    tools:context=".activity.MainActivity">
 
     <TextView
+        android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="16dp"
+        android:textSize="16sp"
+        android:text="@string/main.title"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        tools:layout_editor_absoluteX="1dp" >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="16dp">
+
+            <ProgressBar
+                android:id="@+id/food_progressBar"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="280dp"
+                android:layout_height="17dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/main_home"
+                app:layout_constraintTop_toTopOf="@+id/main_food" />
+
+            <TextView
+                android:id="@+id/main_food"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/food"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/main_water"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="@string/water"
+                app:layout_constraintStart_toStartOf="@+id/main_food"
+                app:layout_constraintTop_toBottomOf="@+id/main_food" />
+
+            <TextView
+                android:id="@+id/main_home"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="@string/toilet.paper"
+                app:layout_constraintStart_toStartOf="@+id/main_food"
+                app:layout_constraintTop_toBottomOf="@+id/main_water" />
+
+            <ProgressBar
+                android:id="@+id/progressBar7"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="280dp"
+                android:layout_height="17dp"
+                app:layout_constraintEnd_toEndOf="@+id/food_progressBar"
+                app:layout_constraintStart_toStartOf="@+id/food_progressBar"
+                app:layout_constraintTop_toTopOf="@+id/main_water" />
+
+            <ProgressBar
+                android:id="@+id/progressBar8"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="280dp"
+                android:layout_height="17dp"
+                app:layout_constraintEnd_toEndOf="@+id/progressBar7"
+                app:layout_constraintStart_toStartOf="@+id/progressBar7"
+                app:layout_constraintTop_toTopOf="@+id/main_home" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

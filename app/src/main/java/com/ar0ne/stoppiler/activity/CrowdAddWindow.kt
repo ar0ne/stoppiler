@@ -121,9 +121,9 @@ class CrowdAddWindow : AppCompatActivity(), CompoundButton.OnCheckedChangeListen
 
     override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
         if (isChecked) {
-            crowd_person_sex_switch.setText(R.string.crowd_person_female)
+            crowd_person_sex_switch.setText(R.string.female)
         } else {
-            crowd_person_sex_switch.setText(R.string.crowd_person_male)
+            crowd_person_sex_switch.setText(R.string.male)
         }
     }
 }
