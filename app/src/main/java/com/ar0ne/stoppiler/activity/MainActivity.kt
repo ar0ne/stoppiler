@@ -14,7 +14,7 @@ class MainActivity : AppCompatActivity() {
     companion object {
         const val SHOW_INTRO_REQUEST = 1
         const val SHOW_CROWD_REQUEST = 4
-        const val SHOW_ADD_GOODS_REQUEST = 7
+        const val SHOW_GOODS_REQUEST = 7
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,7 +39,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun onButtonAddGoodsClicked(view: View) {
-        val intent = Intent(this, GoodsAddActivity::class.java)
-        startActivityForResult(intent, SHOW_ADD_GOODS_REQUEST)
+        val intent = Intent(this, GoodsActivity::class.java)
+        startActivityForResult(intent, SHOW_GOODS_REQUEST)
     }
 }

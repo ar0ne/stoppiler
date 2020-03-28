@@ -11,10 +11,10 @@ enum class Priority {
     LOW, MEDIUM, HIGH
 }
 
-enum class Units {
-    METER,
-    KILOGRAM,
-    LITER,
+enum class Units (val repr: String) {
+    METER("m"),
+    GRAM("gr"),
+    LITER("l"),
 }
 
 
@@ -22,6 +22,6 @@ data class Goods(
     val name: String,
     val type: GoodsType,
     val dailyRate: Double,
-    val unit: Units = Units.KILOGRAM,
+    val unit: Units = Units.GRAM,
     val priority: Priority = Priority.LOW
 )

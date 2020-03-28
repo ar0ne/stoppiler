@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
 import com.ar0ne.stoppiler.R
-import com.ar0ne.stoppiler.activity.GoodsAddActivity
+import com.ar0ne.stoppiler.activity.GoodsActivity
 import com.ar0ne.stoppiler.domain.Goods
 import java.util.*
 import kotlin.collections.ArrayList
@@ -35,12 +35,12 @@ class GoodsAdapter(
         } else {
             holder = view.tag as ViewHolder
         }
-        holder.name!!.text = GoodsAddActivity.goods[position].name
+        holder.name!!.text = GoodsActivity.goods[position].name
         return view
     }
 
     override fun getItem(position: Int): Any {
-        return GoodsAddActivity.goods[position]
+        return GoodsActivity.goods[position]
     }
 
     override fun getItemId(position: Int): Long {
@@ -48,18 +48,18 @@ class GoodsAdapter(
     }
 
     override fun getCount(): Int {
-        return GoodsAddActivity.goods.size
+        return GoodsActivity.goods.size
     }
 
     fun filter(searchText: String) {
         val loweredSearchText = searchText.toLowerCase(Locale.getDefault())
-        GoodsAddActivity.goods = mutableListOf()
+        GoodsActivity.goods = mutableListOf()
         if (searchText.isEmpty()) {
-            GoodsAddActivity.goods = goodsList
+            GoodsActivity.goods = goodsList
         } else {
             for (product in goodsList) {
                 if (product.name.toLowerCase(Locale.getDefault()).contains(loweredSearchText)) {
-                    GoodsAddActivity.goods.add(product)
+                    GoodsActivity.goods.add(product)
                 }
             }
         }

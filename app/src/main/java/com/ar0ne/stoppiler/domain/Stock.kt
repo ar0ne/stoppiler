@@ -25,30 +25,3 @@ class Stock(private val goods: MutableMap<Goods, Double> = mutableMapOf()) {
     }
 
 }
-
-
-fun main() {
-    val toiletPaper = Goods(
-        type = GoodsType.HOME, name = "Toilet Paper", dailyRate = 2.0, unit = Units.METER
-    )
-    val buckwheat = Goods(
-        type = GoodsType.FOOD, name = "Buckwheat grain", dailyRate = .1, unit = Units.KILOGRAM
-    )
-    val juice = Goods(
-        type = GoodsType.WATER, name = "Orange Juice", dailyRate = .5, unit = Units.LITER
-    )
-    val myStock = Stock()
-    myStock.addGoods(toiletPaper, 120.0)
-    myStock.addGoods(buckwheat, 3.0)
-    myStock.addGoods(juice, 4.0)
-
-//    println(myStock.left(toiletPaper))
-    println(myStock.left(buckwheat))
-//    println(myStock.left(juice))
-
-    myStock.subtract(buckwheat, 0.3)
-
-    println(myStock.left(buckwheat))
-
-
-}
