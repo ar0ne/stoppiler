@@ -78,6 +78,7 @@ class MainActivity : AppCompatActivity() {
         when (requestCode) {
             SHOW_INTRO_REQUEST -> {
                 introShown = true
+                saveData()
             }
             SHOW_GOODS_REQUEST -> {
                 if (resultCode == Activity.RESULT_OK) {
