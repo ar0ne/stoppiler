@@ -5,11 +5,11 @@ import java.util.*
 class Stock(private var records: MutableList<StockRecord> = mutableListOf()) {
 
     companion object {
-        val now: Date = Calendar.getInstance().time
+        val now = { Calendar.getInstance().time }
     }
 
     fun addRecord(goods: Goods, volume: Int) {
-        val newRecord = StockRecord(goods, volume, now)
+        val newRecord = StockRecord(goods, volume, now())
         records.add(newRecord)
     }
 
@@ -17,6 +17,24 @@ class Stock(private var records: MutableList<StockRecord> = mutableListOf()) {
 
     fun getRecord(index: Int): StockRecord {
         return records[index]
+    }
+
+    fun getFoodEstimation(): Int {
+        return records.filter {
+            it.goods.type == GoodsType.FOOD
+        }.sumBy { (it.volume * it.goods.dailyRate).toInt() }
+    }
+
+    fun getWaterEstimation(): Int {
+        return records.filter {
+            it.goods.type == GoodsType.WATER
+        }.sumBy { (it.volume * it.goods.dailyRate).toInt() }
+    }
+
+    fun getToiletPaperEstimation(): Int {
+        return records.filter {
+            it.goods.type == GoodsType.HOME
+        }.sumBy { (it.volume * it.goods.dailyRate).toInt() }
     }
 
 //    fun addGoods(item: Goods, volume: Double) {

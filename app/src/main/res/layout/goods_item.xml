@@ -22,7 +22,15 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_toEndOf="@+id/product_photo"
-            android:textSize="30sp" />
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/product_volume"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_toEndOf="@+id/product_name"
+            android:textSize="14sp" />
 
     </RelativeLayout>
 

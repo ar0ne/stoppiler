@@ -29,9 +29,12 @@ class StockAdapter(var stock: Stock, val callback: Callback) :
     inner class MainHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val productName = itemView.findViewById<TextView>(R.id.product_name)
         private val productPhoto = itemView.findViewById<ImageView>(R.id.product_photo)
+        private val productVolume = itemView.findViewById<TextView>(R.id.product_volume)
         fun bind(record: StockRecord) {
             productName.text = record.goods.name
+            productVolume.text = " / ${record.volume} ${record.goods.unit.repr}"
             productPhoto.setImageResource(R.mipmap.ic_launcher_round)
+
             itemView.setOnClickListener {
                 if (adapterPosition != RecyclerView.NO_POSITION) callback.onItemClicked(stock.getRecord(adapterPosition))
             }

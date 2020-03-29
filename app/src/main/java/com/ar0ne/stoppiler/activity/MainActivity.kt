@@ -1,5 +1,6 @@
 package com.ar0ne.stoppiler.activity
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
@@ -10,6 +11,7 @@ import com.ar0ne.stoppiler.R
 import com.ar0ne.stoppiler.adapter.StockAdapter
 import com.ar0ne.stoppiler.domain.*
 import kotlinx.android.synthetic.main.activity_main.*
+import java.util.Collections.max
 
 
 class MainActivity : AppCompatActivity() {
@@ -49,7 +51,7 @@ class MainActivity : AppCompatActivity() {
             })
 
         main_goods_recycler_view.adapter = stockAdapter
-
+        updateProgress()
     }
 
 
@@ -70,6 +72,7 @@ class MainActivity : AppCompatActivity() {
                         product?.apply {
                             stock.addRecord(this, productVolume)
                             stockAdapter?.notifyDataSetChanged()
+                            updateProgress()
                         }
                     }
                 }
@@ -93,5 +96,22 @@ class MainActivity : AppCompatActivity() {
 
     fun showUpdateProductView() {
 
+    }
+
+    @SuppressLint("SetTextI18n")
+    fun updateProgress() {
+        val foodEstimation = stock.getFoodEstimation()
+        val waterEstimation = stock.getWaterEstimation()
+        val paperEstimation = stock.getToiletPaperEstimation()
+        val max = max(listOf(foodEstimation, waterEstimation, paperEstimation))
+        food_progressBar.max = max
+        water_progressBar.max = max
+        toiletPaper_progressBar.max = max
+        food_progressBar.setProgress(foodEstimation, true)
+        water_progressBar.setProgress(waterEstimation, true)
+        toiletPaper_progressBar.setProgress(paperEstimation, true)
+        food_estimation.text = "$foodEstimation days"
+        water_estimation.text = "$waterEstimation days"
+        paper_estimation.text = "$paperEstimation days"
     }
 }

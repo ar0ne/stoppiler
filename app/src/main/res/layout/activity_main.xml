@@ -34,16 +34,32 @@
             <ProgressBar
                 android:id="@+id/food_progressBar"
                 style="?android:attr/progressBarStyleHorizontal"
-                android:layout_width="280dp"
-                android:layout_height="17dp"
+                android:layout_width="242dp"
+                android:layout_height="19dp"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentBottom="true"
                 android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/main_home"
                 app:layout_constraintTop_toTopOf="@+id/main_food" />
+
+            <ProgressBar
+                android:id="@+id/water_progressBar"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="242dp"
+                android:layout_height="19dp"
+                app:layout_constraintEnd_toEndOf="@+id/food_progressBar"
+                app:layout_constraintStart_toStartOf="@+id/food_progressBar"
+                app:layout_constraintTop_toTopOf="@+id/main_water" />
+
+            <ProgressBar
+                android:id="@+id/toiletPaper_progressBar"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="242dp"
+                android:layout_height="19dp"
+                app:layout_constraintEnd_toEndOf="@+id/water_progressBar"
+                app:layout_constraintStart_toStartOf="@+id/water_progressBar"
+                app:layout_constraintTop_toTopOf="@+id/main_home" />
 
             <TextView
                 android:id="@+id/main_food"
@@ -72,23 +88,33 @@
                 app:layout_constraintStart_toStartOf="@+id/main_food"
                 app:layout_constraintTop_toBottomOf="@+id/main_water" />
 
-            <ProgressBar
-                android:id="@+id/water_progressBar"
-                style="?android:attr/progressBarStyleHorizontal"
-                android:layout_width="280dp"
-                android:layout_height="17dp"
-                app:layout_constraintEnd_toEndOf="@+id/food_progressBar"
-                app:layout_constraintStart_toStartOf="@+id/food_progressBar"
-                app:layout_constraintTop_toTopOf="@+id/main_water" />
 
-            <ProgressBar
-                android:id="@+id/toiletPaper_progressBar"
-                style="?android:attr/progressBarStyleHorizontal"
-                android:layout_width="280dp"
-                android:layout_height="17dp"
-                app:layout_constraintEnd_toEndOf="@+id/water_progressBar"
-                app:layout_constraintStart_toStartOf="@+id/water_progressBar"
-                app:layout_constraintTop_toTopOf="@+id/main_home" />
+            <TextView
+                android:id="@+id/food_estimation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/food_progressBar"
+                app:layout_constraintTop_toTopOf="@+id/food_progressBar" />
+
+            <TextView
+                android:id="@+id/water_estimation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="@+id/food_estimation"
+                app:layout_constraintStart_toStartOf="@+id/food_estimation"
+                app:layout_constraintTop_toTopOf="@+id/water_progressBar" />
+
+            <TextView
+                android:id="@+id/paper_estimation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="@+id/water_estimation"
+                app:layout_constraintStart_toStartOf="@+id/water_estimation"
+                app:layout_constraintTop_toTopOf="@+id/toiletPaper_progressBar" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>
