@@ -22,7 +22,7 @@
         android:id="@+id/main_card_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="16dp"
         app:layout_constraintTop_toBottomOf="@+id/main_title"
         tools:layout_editor_absoluteX="1dp">
 
@@ -61,7 +61,7 @@
                 app:layout_constraintStart_toStartOf="@+id/water_progressBar"
                 app:layout_constraintTop_toTopOf="@+id/main_home" />
 
-            <com.ar0ne.stoppiler.ui.SolidFontAwesome
+            <com.ar0ne.stoppiler.ui.SolidFontAwesomeTextView
                 android:id="@+id/main_food"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -69,7 +69,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <com.ar0ne.stoppiler.ui.SolidFontAwesome
+            <com.ar0ne.stoppiler.ui.SolidFontAwesomeTextView
                 android:id="@+id/main_water"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -78,7 +78,7 @@
                 app:layout_constraintStart_toStartOf="@+id/main_food"
                 app:layout_constraintTop_toBottomOf="@+id/main_food" />
 
-            <com.ar0ne.stoppiler.ui.SolidFontAwesome
+            <com.ar0ne.stoppiler.ui.SolidFontAwesomeTextView
                 android:id="@+id/main_home"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -122,7 +122,6 @@
         android:id="@+id/main_goods_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintTop_toBottomOf="@+id/main_card_view"
         tools:layout_editor_absoluteX="0dp" />
@@ -139,15 +138,17 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@android:drawable/ic_input_add" />
 
-    <ImageButton
+    <com.ar0ne.stoppiler.ui.SolidFontAwesomeTextView
         android:id="@+id/main_btn_crowd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
         android:onClick="onButtonOpenCrowdClicked"
-        app:layout_constraintBottom_toTopOf="@+id/main_card_view"
+        android:padding="8dp"
+        android:text="&#xf007;"
+        android:textSize="21sp"
+        app:layout_constraintBottom_toBottomOf="@+id/main_title"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@android:drawable/btn_star" />

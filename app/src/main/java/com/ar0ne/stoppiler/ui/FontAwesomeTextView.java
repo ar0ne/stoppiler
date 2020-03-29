@@ -6,19 +6,19 @@ import android.util.AttributeSet;
 
 import androidx.appcompat.widget.AppCompatTextView;
 
-public abstract class FontAwesome extends AppCompatTextView {
+public abstract class FontAwesomeTextView extends AppCompatTextView {
 
-    public FontAwesome(Context context, AttributeSet attrs, int defStyle) {
+    public FontAwesomeTextView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         init();
     }
 
-    public FontAwesome(Context context, AttributeSet attrs) {
+    public FontAwesomeTextView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init();
     }
 
-    public FontAwesome(Context context) {
+    public FontAwesomeTextView(Context context) {
         super(context);
         init();
     }
@@ -30,5 +30,4 @@ public abstract class FontAwesome extends AppCompatTextView {
         Typeface tf = Typeface.createFromAsset(getContext().getAssets(), getPath());
         setTypeface(tf);
     }
-
 }

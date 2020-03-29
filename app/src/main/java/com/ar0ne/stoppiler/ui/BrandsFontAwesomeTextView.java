@@ -3,17 +3,17 @@ package com.ar0ne.stoppiler.ui;
 import android.content.Context;
 import android.util.AttributeSet;
 
-public class BrandsFontAwesome extends FontAwesome {
+public class BrandsFontAwesomeTextView extends FontAwesomeTextView {
 
-    public BrandsFontAwesome(Context context, AttributeSet attrs, int defStyle) {
+    public BrandsFontAwesomeTextView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
     }
 
-    public BrandsFontAwesome(Context context, AttributeSet attrs) {
+    public BrandsFontAwesomeTextView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public BrandsFontAwesome(Context context) {
+    public BrandsFontAwesomeTextView(Context context) {
         super(context);
     }
 

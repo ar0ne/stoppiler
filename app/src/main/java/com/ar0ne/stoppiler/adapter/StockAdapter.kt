@@ -35,7 +35,7 @@ class StockAdapter(var stock: Stock, val callback: Callback, val removeCallback:
         private val btnRemove = itemView.findViewById<ImageButton>(R.id.product_btn_remove)
         fun bind(record: StockRecord) {
             productName.text = record.goods.name
-            productVolume.text = " / ${record.volume} ${record.goods.unit.repr}"
+            productVolume.text = "/ ${record.volume} ${record.goods.unit.repr}"
             productPhoto.setImageResource(R.mipmap.ic_launcher_round)
 
             itemView.setOnClickListener {
