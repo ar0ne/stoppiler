@@ -61,30 +61,29 @@
                 app:layout_constraintStart_toStartOf="@+id/water_progressBar"
                 app:layout_constraintTop_toTopOf="@+id/main_home" />
 
-            <TextView
+            <com.ar0ne.stoppiler.ui.SolidFontAwesome
                 android:id="@+id/main_food"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="@string/food"
+                android:text="&#xf6d7;"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
+            <com.ar0ne.stoppiler.ui.SolidFontAwesome
                 android:id="@+id/main_water"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:text="@string/water"
+                android:layout_marginTop="16dp"
+                android:text="&#xf72f;"
                 app:layout_constraintStart_toStartOf="@+id/main_food"
                 app:layout_constraintTop_toBottomOf="@+id/main_food" />
 
-            <TextView
+            <com.ar0ne.stoppiler.ui.SolidFontAwesome
                 android:id="@+id/main_home"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:text="@string/toilet.paper"
+                android:layout_marginTop="16dp"
+                android:text="&#xf71e;"
                 app:layout_constraintStart_toStartOf="@+id/main_food"
                 app:layout_constraintTop_toBottomOf="@+id/main_water" />
 

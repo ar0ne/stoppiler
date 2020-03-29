@@ -15,7 +15,7 @@
     <string name="cancel">Cancel</string>
     <string name="remove.alert.title">Confirm action</string>
     <string name="remove.alert.confirmation.text">Would you like to remove it?</string>
-    <string name="main.title">Goods</string>
+    <string name="main.title">Your Stockpile</string>
     <string name="toilet.paper">Toilet Paper</string>
     <string name="food">Food</string>
     <string name="water">Water</string>
