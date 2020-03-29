@@ -50,6 +50,10 @@ class Stock(private var records: MutableList<StockRecord> = mutableListOf()) {
         records.remove(record)
     }
 
+    fun getGoodsNames(): List<String> {
+        return records.map { it.goods.name }
+    }
+
 //    fun addGoods(item: Goods, volume: Double) {
 //        val currentVolume: Double = goods[item] ?: 0.0
 //        goods[item] = currentVolume.plus(volume)

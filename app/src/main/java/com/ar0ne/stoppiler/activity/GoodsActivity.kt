@@ -9,10 +9,8 @@ import android.widget.AdapterView
 import android.widget.SearchView
 import com.ar0ne.stoppiler.R
 import com.ar0ne.stoppiler.adapter.GoodsSearchAdapter
-import com.ar0ne.stoppiler.domain.Goods
-import com.ar0ne.stoppiler.domain.GoodsType
-import com.ar0ne.stoppiler.domain.Priority
-import com.ar0ne.stoppiler.domain.Units
+import com.ar0ne.stoppiler.domain.*
+import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_goods.*
 
 class GoodsActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
@@ -24,6 +22,8 @@ class GoodsActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
 //            Goods("Toilet Paper", GoodsType.TOILET_PAPER, 1.94, Units.METER, Priority.HIGH),
             Goods("Buckwheat Cereal", GoodsType.FOOD, 3.29, Units.GRAM, Priority.MEDIUM)
         )
+        var filteredGoods: MutableList<Goods>? = null
+
         const val SHOW_ADD_GOODS_REQUEST = 8
         const val EXTRA_GOODS_NAME = "name"
         const val EXTRA_GOODS_UNIT = "unit"
@@ -34,7 +34,12 @@ class GoodsActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_goods)
 
-        goodsSearchAdapter = GoodsSearchAdapter(this, goods as ArrayList<Goods>)
+        val usersGoods = getUsersGoodsNames()
+        filteredGoods = goods.filterNot {
+            it.name in usersGoods
+        }.toMutableList()
+
+        goodsSearchAdapter = GoodsSearchAdapter(this, filteredGoods as ArrayList<Goods>)
 
         goods_list_view.adapter = goodsSearchAdapter
 
@@ -82,6 +87,15 @@ class GoodsActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
         val result = Intent()
         setResult(Activity.RESULT_CANCELED, result)
         finish()
+    }
+
+    private fun getUsersGoodsNames(): List<String> {
+        val stockJson: String? = MainActivity.sPref!!.getString(MainActivity.STOCK_KEY, null)
+        if (stockJson != null) {
+            val stock = Gson().fromJson(stockJson, Stock::class.java)
+            return stock.getGoodsNames()
+        }
+        return listOf()
     }
 
 }

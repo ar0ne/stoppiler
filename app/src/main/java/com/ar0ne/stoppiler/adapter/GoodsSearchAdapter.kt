@@ -40,7 +40,7 @@ class GoodsSearchAdapter(
     }
 
     override fun getItem(position: Int): Any {
-        return GoodsActivity.goods[position]
+        return GoodsActivity.filteredGoods!![position]
     }
 
     override fun getItemId(position: Int): Long {
@@ -48,18 +48,18 @@ class GoodsSearchAdapter(
     }
 
     override fun getCount(): Int {
-        return GoodsActivity.goods.size
+        return GoodsActivity.filteredGoods!!.size
     }
 
     fun filter(searchText: String) {
         val loweredSearchText = searchText.toLowerCase(Locale.getDefault())
-        GoodsActivity.goods = mutableListOf()
+        GoodsActivity.filteredGoods = mutableListOf()
         if (searchText.isEmpty()) {
             GoodsActivity.goods = goodsList
         } else {
             for (product in goodsList) {
                 if (product.name.toLowerCase(Locale.getDefault()).contains(loweredSearchText)) {
-                    GoodsActivity.goods.add(product)
+                    GoodsActivity.filteredGoods?.add(product)
                 }
             }
         }
