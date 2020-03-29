@@ -133,9 +133,9 @@
         android:layout_marginBottom="24dp"
         android:clickable="true"
         android:onClick="onButtonAddGoodsClicked"
+        android:src="@drawable/ic_add_white_24dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@android:drawable/ic_input_add" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <com.ar0ne.stoppiler.ui.SolidFontAwesomeTextView
         android:id="@+id/main_btn_help"
