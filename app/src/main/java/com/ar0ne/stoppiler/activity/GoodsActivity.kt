@@ -5,6 +5,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.AdapterView
 import android.widget.SearchView
 import com.ar0ne.stoppiler.R
@@ -80,6 +81,12 @@ class GoodsActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
                 }
             }
         }
+    }
+
+    fun onBtnCloseClicked(view: View) {
+        val result = Intent()
+        setResult(Activity.RESULT_CANCELED, result)
+        finish()
     }
 
 
