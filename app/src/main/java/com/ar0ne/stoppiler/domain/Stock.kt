@@ -1,27 +1,44 @@
 package com.ar0ne.stoppiler.domain
 
-class Stock(private val goods: MutableMap<Goods, Double> = mutableMapOf()) {
+import java.util.*
 
-    fun addGoods(item: Goods, volume: Double) {
-        val currentVolume: Double = goods[item] ?: 0.0
-        goods[item] = currentVolume.plus(volume)
+class Stock(private var records: MutableList<StockRecord> = mutableListOf()) {
+
+    companion object {
+        val now: Date = Calendar.getInstance().time
     }
 
-    fun subtract(item: Goods, diff: Double = item.dailyRate) {
-        val currentVolume: Double = goods[item] ?: 0.0
-        val updatedVolume = currentVolume.minus(diff)
-        goods[item] = if (updatedVolume > 0) updatedVolume else 0.0
+    fun addRecord(goods: Goods, volume: Int) {
+        val newRecord = StockRecord(goods, volume, now)
+        records.add(newRecord)
     }
 
-    fun left(item: Goods): Double {
-        val volume: Double = goods[item] ?: 0.0
-        return volume / item.dailyRate
+    fun size(): Int = records.size
+
+    fun getRecord(index: Int): StockRecord {
+        return records[index]
     }
 
-    override fun toString(): String {
-        return goods.map {
-            "${it.key.name}: left for ${left(it.key)} days"
-        }.joinToString()
-    }
+//    fun addGoods(item: Goods, volume: Double) {
+//        val currentVolume: Double = goods[item] ?: 0.0
+//        goods[item] = currentVolume.plus(volume)
+//    }
+//
+//    fun subtract(item: Goods, diff: Double = item.dailyRate) {
+//        val currentVolume: Double = goods[item] ?: 0.0
+//        val updatedVolume = currentVolume.minus(diff)
+//        goods[item] = if (updatedVolume > 0) updatedVolume else 0.0
+//    }
+//
+//    fun left(item: Goods): Double {
+//        val volume: Double = goods[item] ?: 0.0
+//        return volume / item.dailyRate
+//    }
+//
+//    override fun toString(): String {
+//        return goods.map {
+//            "${it.key.name}: left for ${left(it.key)} days"
+//        }.joinToString()
+//    }
 
 }

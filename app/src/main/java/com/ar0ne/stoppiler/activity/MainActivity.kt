@@ -7,11 +7,8 @@ import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.ar0ne.stoppiler.R
-import com.ar0ne.stoppiler.adapter.GoodsAdapter
-import com.ar0ne.stoppiler.domain.Goods
-import com.ar0ne.stoppiler.domain.GoodsType
-import com.ar0ne.stoppiler.domain.Priority
-import com.ar0ne.stoppiler.domain.Units
+import com.ar0ne.stoppiler.adapter.StockAdapter
+import com.ar0ne.stoppiler.domain.*
 import kotlinx.android.synthetic.main.activity_main.*
 
 
@@ -19,15 +16,20 @@ class MainActivity : AppCompatActivity() {
 
     private var introShown = false
 
-    private var goodsAdapter: GoodsAdapter? = null
+    private var stockAdapter: StockAdapter? = null
 
     companion object {
         const val SHOW_INTRO_REQUEST = 1
         const val SHOW_CROWD_REQUEST = 4
         const val SHOW_GOODS_REQUEST = 7
 
-        val stock = mutableListOf(
-            Goods("Bread", GoodsType.FOOD, 500.0, Units.GRAM, Priority.MEDIUM)
+        val stock: Stock = Stock(
+            mutableListOf(
+                StockRecord(
+                    Goods("Bread", GoodsType.FOOD, 500.0, Units.GRAM, Priority.MEDIUM),
+                    300
+                )
+            )
         )
 
     }
@@ -40,13 +42,13 @@ class MainActivity : AppCompatActivity() {
             startActivityForResult(intent, SHOW_INTRO_REQUEST)
         }
 
-        goodsAdapter = GoodsAdapter(
+        stockAdapter = StockAdapter(
             stock,
-            object : GoodsAdapter.Callback {
-                override fun onItemClicked(item: Goods) = showUpdateProductView()
+            object : StockAdapter.Callback {
+                override fun onItemClicked(record: StockRecord) = showUpdateProductView()
             })
 
-        main_goods_recycler_view.adapter = goodsAdapter
+        main_goods_recycler_view.adapter = stockAdapter
 
     }
 
@@ -66,8 +68,8 @@ class MainActivity : AppCompatActivity() {
                         // @todo: get data from dataSource
                         val product: Goods? = GoodsActivity.goods.find { it.name == productName }
                         product?.apply {
-                            stock.add(this)
-                            goodsAdapter?.notifyDataSetChanged()
+                            stock.addRecord(this, productVolume)
+                            stockAdapter?.notifyDataSetChanged()
                         }
                     }
                 }

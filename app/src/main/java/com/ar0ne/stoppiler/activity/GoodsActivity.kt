@@ -71,7 +71,6 @@ class GoodsActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
                 if (productName != null && volume != null && volume > 0) {
                     val product: Goods? = goods.find { it.name == productName }
                     product?.apply {
-                        Log.d("LOG-Goods", "Added: $this")
                         val result = Intent()
                         result.putExtra(EXTRA_GOODS_NAME, productName)
                         result.putExtra(EXTRA_GOODS_VOLUME, volume)
