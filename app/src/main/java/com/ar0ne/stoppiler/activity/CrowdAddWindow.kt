@@ -3,6 +3,8 @@ package com.ar0ne.stoppiler.activity
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
 import android.widget.CompoundButton
 import com.ar0ne.stoppiler.R
@@ -15,6 +17,8 @@ class CrowdAddWindow : PopupWindow(), CompoundButton.OnCheckedChangeListener {
         const val EXTRA_PERSON_NAME = "person_name"
         const val EXTRA_PERSON_AGE = "person_age"
         const val EXTRA_PERSON_SEX = "person_sex"
+        const val EXTRA_PERSON_WEIGHT = "person_weight"
+        const val EXTRA_PERSON_HEIGHT = "person_height"
     }
 
     override fun initViews(main: View?, background: View?) {
@@ -27,6 +31,41 @@ class CrowdAddWindow : PopupWindow(), CompoundButton.OnCheckedChangeListener {
         setContentView(R.layout.crowd_add_person)
 
         crowd_person_sex_switch?.setOnCheckedChangeListener(this)
+
+        crowd_person_save.setEnabled(isSaveButtonEnabled())
+
+        crowd_person_name.addTextChangedListener(object: TextWatcher{
+            override fun afterTextChanged(s: Editable?) {}
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                crowd_person_save.setEnabled(isSaveButtonEnabled())
+            }
+        })
+
+        crowd_person_age.addTextChangedListener(object: TextWatcher{
+            override fun afterTextChanged(s: Editable?) {}
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                crowd_person_save.setEnabled(isSaveButtonEnabled())
+            }
+        })
+
+        crowd_person_weight.addTextChangedListener(object: TextWatcher{
+            override fun afterTextChanged(s: Editable?) {}
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                crowd_person_save.setEnabled(isSaveButtonEnabled())
+            }
+        })
+
+        crowd_person_height.addTextChangedListener(object: TextWatcher{
+            override fun afterTextChanged(s: Editable?) {}
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                crowd_person_save.setEnabled(isSaveButtonEnabled())
+            }
+        })
+
     }
 
     fun onCancelAddPersonClicked(view: View) {
@@ -38,10 +77,14 @@ class CrowdAddWindow : PopupWindow(), CompoundButton.OnCheckedChangeListener {
         val result = Intent()
         val sex = if (crowd_person_sex_switch.isChecked) Sex.FEMALE else Sex.MALE
         val name = crowd_person_name.text.toString()
-        val age = crowd_person_age.text.toString()
+        val age = crowd_person_age.text.toString().toInt()
+        val weight = crowd_person_weight.text.toString().toInt()
+        val height = crowd_person_height.text.toString().toInt()
         result.putExtra(EXTRA_PERSON_NAME, name)
         result.putExtra(EXTRA_PERSON_AGE, age)
-        result.putExtra(EXTRA_PERSON_SEX, sex)
+        result.putExtra(EXTRA_PERSON_SEX, sex.toString())
+        result.putExtra(EXTRA_PERSON_WEIGHT, weight)
+        result.putExtra(EXTRA_PERSON_HEIGHT, height)
         setResult(Activity.RESULT_OK, result)
         finish()
     }
@@ -52,5 +95,12 @@ class CrowdAddWindow : PopupWindow(), CompoundButton.OnCheckedChangeListener {
         } else {
             crowd_person_sex_switch.setText(R.string.male)
         }
+    }
+
+    private fun isSaveButtonEnabled(): Boolean {
+        return crowd_person_name.text.isNotEmpty() &&
+                crowd_person_age.text.isNotEmpty() &&
+                crowd_person_weight.text.isNotEmpty() &&
+                crowd_person_height.text.isNotEmpty()
     }
 }

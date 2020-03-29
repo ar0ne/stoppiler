@@ -40,7 +40,7 @@ class CrowdAdapter(
         private val personPhoto = itemView.findViewById<SolidFontAwesomeTextView>(R.id.person_photo)
         fun bind(user: User) {
             personName.text = user.name
-            personAge.text = "(${user.age})"
+            personAge.text = "(${user.age} y/o)"
             personPhoto.text = getUserIcon(user)
             itemView.setOnClickListener {
                 if (adapterPosition != RecyclerView.NO_POSITION) callback.onItemClicked(users[adapterPosition])

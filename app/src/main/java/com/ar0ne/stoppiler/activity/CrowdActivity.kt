@@ -72,18 +72,24 @@ class CrowdActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == ADD_PERSON_REQUEST) {
             if (resultCode == Activity.RESULT_OK) {
-                val name: String? = data?.getStringExtra(CrowdAddWindow.EXTRA_PERSON_NAME)
-                val age: Int? = data?.getStringExtra(CrowdAddWindow.EXTRA_PERSON_AGE)?.toInt()
-                var sex: Sex = Sex.MALE
-                data?.getStringExtra(CrowdAddWindow.EXTRA_PERSON_SEX)?.let {
-                    sex = if (Sex.valueOf(it) == Sex.MALE) Sex.MALE else Sex.FEMALE
-                }
-                if (name != null && age != null) {
-                    val user = User(name, age, sex)
-                    users.add(user)
-                    crowdAdapter?.notifyDataSetChanged()
-                    crowd_next.setEnabled(isNextButtonEnabled())
-                }
+                val name: String = data?.getStringExtra(CrowdAddWindow.EXTRA_PERSON_NAME) ?: return
+                val extraSex = data.getStringExtra(CrowdAddWindow.EXTRA_PERSON_SEX) ?: return
+
+                val extraAge = data.getIntExtra(CrowdAddWindow.EXTRA_PERSON_AGE, 0)
+                val extraWeight = data.getIntExtra(CrowdAddWindow.EXTRA_PERSON_WEIGHT, 0)
+                val extraHeight = data.getIntExtra(CrowdAddWindow.EXTRA_PERSON_HEIGHT, 0)
+
+                // @TODO: default value based on sex ?
+                val weight: Int = if (extraWeight > 0) extraWeight else 70
+                val height: Int =  if (extraHeight in 1..229) extraHeight else 170
+                val age: Int = if (extraAge in 1..99) extraAge else 30
+                val sex: Sex = if (Sex.valueOf(extraSex) == Sex.MALE) Sex.MALE else Sex.FEMALE
+
+                val user = User(name, age, sex, weight, height)
+
+                users.add(user)
+                crowdAdapter?.notifyDataSetChanged()
+                crowd_next.setEnabled(isNextButtonEnabled())
             }
         }
     }
