@@ -39,6 +39,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_marginTop="8dp"
                 android:textStyle="bold"
+                android:textSize="24sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -46,11 +47,11 @@
             <TextView
                 android:id="@+id/add_product_unit"
                 android:layout_width="72dp"
-                android:layout_height="42dp"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
+                android:layout_marginBottom="5dp"
                 app:layout_constraintBottom_toBottomOf="@+id/add_product_volume"
-                app:layout_constraintStart_toEndOf="@+id/add_product_volume"
-                app:layout_constraintTop_toTopOf="@+id/add_product_volume" />
+                app:layout_constraintStart_toEndOf="@+id/add_product_volume" />
 
             <EditText
                 android:id="@+id/add_product_volume"

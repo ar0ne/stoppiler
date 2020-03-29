@@ -31,6 +31,7 @@ class CrowdActivity : AppCompatActivity() {
         setContentView(R.layout.activity_crowd)
 
         crowdAdapter = CrowdAdapter(
+            this,
             users,
             object : CrowdAdapter.Callback {
                 override fun onItemClicked(user: User) = showDeletePersonDialog(user)

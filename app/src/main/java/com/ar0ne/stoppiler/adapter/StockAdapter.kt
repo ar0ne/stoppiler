@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ar0ne.stoppiler.R
 import com.ar0ne.stoppiler.domain.Stock
 import com.ar0ne.stoppiler.domain.StockRecord
+import com.ar0ne.stoppiler.ui.SolidFontAwesomeTextView
 
 class StockAdapter(var stock: Stock, val callback: Callback, val removeCallback: Callback) :
     RecyclerView.Adapter<StockAdapter.MainHolder>() {
@@ -32,10 +33,10 @@ class StockAdapter(var stock: Stock, val callback: Callback, val removeCallback:
         private val productName = itemView.findViewById<TextView>(R.id.product_name)
         private val productPhoto = itemView.findViewById<ImageView>(R.id.product_photo)
         private val productVolume = itemView.findViewById<TextView>(R.id.product_volume)
-        private val btnRemove = itemView.findViewById<ImageButton>(R.id.product_btn_remove)
+        private val btnRemove = itemView.findViewById<SolidFontAwesomeTextView>(R.id.product_btn_remove)
         fun bind(record: StockRecord) {
             productName.text = record.goods.name
-            productVolume.text = "/ ${record.volume} ${record.goods.unit.repr}"
+            productVolume.text = "${record.volume} ${record.goods.unit.repr}"
             productPhoto.setImageResource(R.mipmap.ic_launcher_round)
 
             itemView.setOnClickListener {
