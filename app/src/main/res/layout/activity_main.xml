@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -13,9 +12,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="50dp"
         android:layout_marginTop="16dp"
+        android:text="@string/main.title"
         android:textSize="24sp"
         android:textStyle="bold"
-        android:text="@string/main.title"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -66,7 +65,7 @@
                 android:id="@+id/main_food"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="&#xf6d7;"
+                android:text="@string/food.icon"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -75,7 +74,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="&#xf72f;"
+                android:text="@string/water.icon"
                 app:layout_constraintStart_toStartOf="@+id/main_food"
                 app:layout_constraintTop_toBottomOf="@+id/main_food" />
 
@@ -84,10 +83,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="&#xf71e;"
+                android:text="@string/toilet.paper.icon"
                 app:layout_constraintStart_toStartOf="@+id/main_food"
                 app:layout_constraintTop_toBottomOf="@+id/main_water" />
-
 
             <TextView
                 android:id="@+id/food_estimation"
@@ -140,6 +138,20 @@
         app:srcCompat="@android:drawable/ic_input_add" />
 
     <com.ar0ne.stoppiler.ui.SolidFontAwesomeTextView
+        android:id="@+id/main_btn_help"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:onClick="onButtonOpenHelpClicked"
+        android:padding="8dp"
+        android:text="@string/question.icon"
+        android:textSize="21sp"
+        app:layout_constraintBottom_toBottomOf="@+id/main_title"
+        app:layout_constraintEnd_toStartOf="@+id/main_btn_crowd"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.ar0ne.stoppiler.ui.SolidFontAwesomeTextView
         android:id="@+id/main_btn_crowd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -147,12 +159,11 @@
         android:layout_marginEnd="16dp"
         android:onClick="onButtonOpenCrowdClicked"
         android:padding="8dp"
-        android:text="&#xf007;"
+        android:text="@string/human.icon"
         android:textSize="21sp"
         app:layout_constraintBottom_toBottomOf="@+id/main_title"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@android:drawable/btn_star" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

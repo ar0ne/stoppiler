@@ -26,6 +26,7 @@ class MainActivity : AppCompatActivity() {
         const val SHOW_CROWD_REQUEST = 4
         const val SHOW_GOODS_REQUEST = 7
         const val SHOW_UPDATE_GOODS_REQUEST = 9
+        const val SHOW_HELP_REQUEST = 11
 
         val stock = Stock(
             mutableListOf(
@@ -111,6 +112,11 @@ class MainActivity : AppCompatActivity() {
     fun onButtonAddGoodsClicked(view: View) {
         val intent = Intent(this, GoodsActivity::class.java)
         startActivityForResult(intent, SHOW_GOODS_REQUEST)
+    }
+
+    fun onButtonOpenHelpClicked(view: View) {
+        val intent = Intent(this, HelpActivity::class.java)
+        startActivityForResult(intent, SHOW_HELP_REQUEST)
     }
 
     fun showUpdateProductView(record: StockRecord) {

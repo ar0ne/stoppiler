@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
-        <activity android:name=".activity.GoodsItemWindow"></activity>
+        <activity android:name=".activity.HelpActivity"></activity>
+        <activity android:name=".activity.GoodsItemWindow" />
         <activity android:name=".activity.GoodsActivity" />
         <activity android:name=".activity.CrowdActivity" />
         <activity android:name=".activity.IntroActivity" />

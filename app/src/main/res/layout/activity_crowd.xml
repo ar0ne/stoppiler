@@ -42,15 +42,16 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <Button
+    <com.ar0ne.stoppiler.ui.SolidFontAwesomeTextView
         android:id="@+id/crowd_next"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
         android:layout_marginEnd="16dp"
         android:clickable="true"
+        android:textSize="26sp"
+        android:padding="8dp"
         android:onClick="onButtonNextClicked"
-        android:text="@string/next"
+        android:text="@string/forward.icon"
         app:layout_constraintBottom_toBottomOf="@+id/crowd_title"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/crowd_title" />
