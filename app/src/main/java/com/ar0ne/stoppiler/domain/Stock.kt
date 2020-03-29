@@ -37,6 +37,16 @@ class Stock(private var records: MutableList<StockRecord> = mutableListOf()) {
         }.sumBy { (it.volume * it.goods.dailyRate).toInt() }
     }
 
+    fun getRecord(goodsName: String): StockRecord? {
+        return records.find {
+            it.goods.name == goodsName
+        }
+    }
+
+    fun removeRecord(record: StockRecord) {
+        records.remove(record)
+    }
+
 //    fun addGoods(item: Goods, volume: Double) {
 //        val currentVolume: Double = goods[item] ?: 0.0
 //        goods[item] = currentVolume.plus(volume)

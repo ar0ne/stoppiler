@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AlertDialog
 import com.ar0ne.stoppiler.R
@@ -67,8 +66,8 @@ class CrowdActivity : AppCompatActivity() {
         val builder = AlertDialog.Builder(this)
 
         with(builder) {
-            setTitle(R.string.crowd_person_remove_title)
-            setMessage(R.string.crowd_person_remove_text)
+            setTitle(R.string.remove_alert_title)
+            setMessage(R.string.remove_alert_confirmation_text)
             setPositiveButton(android.R.string.yes) { _, _ ->
                 users.remove(user)
                 crowdAdapter?.notifyDataSetChanged()

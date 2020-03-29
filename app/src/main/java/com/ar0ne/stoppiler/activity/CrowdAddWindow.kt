@@ -17,11 +17,12 @@ class CrowdAddWindow : PopupWindow(), CompoundButton.OnCheckedChangeListener {
         const val EXTRA_PERSON_SEX = "person_sex"
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        // @todo: any better solution?
+    override fun initViews(main: View?, background: View?) {
         mainView = crowd_add_person_view_with_border
         backgroundView = crowd_add_person_background
+    }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.crowd_add_person)
 

@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.SearchView
@@ -47,7 +46,7 @@ class GoodsActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
         goods_list_view.onItemClickListener =
             AdapterView.OnItemClickListener { parent, view, position, id ->
                 val item = parent.getItemAtPosition(position) as Goods
-                val intent = Intent(this, GoodsAddWindow::class.java)
+                val intent = Intent(this, GoodsItemWindow::class.java)
                 intent.putExtra(EXTRA_GOODS_NAME, item.name)
                 intent.putExtra(EXTRA_GOODS_UNIT, item.unit.repr)
                 startActivityForResult(intent, SHOW_ADD_GOODS_REQUEST)
@@ -87,6 +86,5 @@ class GoodsActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
         setResult(Activity.RESULT_CANCELED, result)
         finish()
     }
-
 
 }

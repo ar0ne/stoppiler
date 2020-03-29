@@ -6,6 +6,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.ar0ne.stoppiler.R
 import com.ar0ne.stoppiler.adapter.StockAdapter
@@ -24,8 +25,9 @@ class MainActivity : AppCompatActivity() {
         const val SHOW_INTRO_REQUEST = 1
         const val SHOW_CROWD_REQUEST = 4
         const val SHOW_GOODS_REQUEST = 7
+        const val SHOW_UPDATE_GOODS_REQUEST = 9
 
-        val stock: Stock = Stock(
+        val stock = Stock(
             mutableListOf(
                 StockRecord(
                     Goods("Bread", GoodsType.FOOD, 500.0, Units.GRAM, Priority.MEDIUM),
@@ -47,7 +49,10 @@ class MainActivity : AppCompatActivity() {
         stockAdapter = StockAdapter(
             stock,
             object : StockAdapter.Callback {
-                override fun onItemClicked(record: StockRecord) = showUpdateProductView()
+                override fun onItemClicked(record: StockRecord) = showUpdateProductView(record)
+            },
+            object: StockAdapter.Callback {
+                override fun onItemClicked(record: StockRecord) = onRemoveRecordBtnClicked(record)
             })
 
         main_goods_recycler_view.adapter = stockAdapter
@@ -80,6 +85,20 @@ class MainActivity : AppCompatActivity() {
             SHOW_CROWD_REQUEST -> {
 
             }
+            SHOW_UPDATE_GOODS_REQUEST -> {
+                if (resultCode == Activity.RESULT_OK) {
+                    val productName = data?.getStringExtra(GoodsActivity.EXTRA_GOODS_NAME)
+                    val productVolume = data?.getIntExtra(GoodsActivity.EXTRA_GOODS_VOLUME, 0)
+                    if (productName != null && productVolume != null && productVolume > 0) {
+                        // @todo: get data from dataSource
+                        stock.getRecord(productName)?.apply {
+                            this.volume = productVolume
+                            stockAdapter?.notifyDataSetChanged()
+                            updateProgress()
+                        }
+                    }
+                }
+            }
         }
     }
 
@@ -94,8 +113,12 @@ class MainActivity : AppCompatActivity() {
         startActivityForResult(intent, SHOW_GOODS_REQUEST)
     }
 
-    fun showUpdateProductView() {
-
+    fun showUpdateProductView(record: StockRecord) {
+        val intent = Intent(this, GoodsItemWindow::class.java)
+        intent.putExtra(GoodsActivity.EXTRA_GOODS_NAME, record.goods.name)
+        intent.putExtra(GoodsActivity.EXTRA_GOODS_UNIT, record.goods.unit.repr)
+        intent.putExtra(GoodsActivity.EXTRA_GOODS_VOLUME, record.volume)
+        startActivityForResult(intent, SHOW_UPDATE_GOODS_REQUEST)
     }
 
     @SuppressLint("SetTextI18n")
@@ -113,5 +136,21 @@ class MainActivity : AppCompatActivity() {
         food_estimation.text = "$foodEstimation days"
         water_estimation.text = "$waterEstimation days"
         paper_estimation.text = "$paperEstimation days"
+    }
+
+
+    fun onRemoveRecordBtnClicked(record: StockRecord) {
+        val builder = AlertDialog.Builder(this)
+
+        with(builder) {
+            setTitle(R.string.remove_alert_title)
+            setMessage(R.string.remove_alert_confirmation_text)
+            setPositiveButton(android.R.string.yes) { _, _ ->
+                stock.removeRecord(record)
+                stockAdapter?.notifyDataSetChanged()
+            }
+            setNegativeButton(android.R.string.no) { dialog, which -> }
+            show()
+        }
     }
 }

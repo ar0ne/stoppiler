@@ -3,19 +3,20 @@ package com.ar0ne.stoppiler.activity
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import com.ar0ne.stoppiler.R
-import kotlinx.android.synthetic.main.goods_add_product.*
+import kotlinx.android.synthetic.main.goods_item_popup.*
 
-class GoodsAddWindow : PopupWindow() {
+class GoodsItemWindow : PopupWindow() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        // @todo: any better solution?
+    override fun initViews(main: View?, background: View?) {
         mainView = goods_add_product_view_with_border
         backgroundView = goods_add_product_background
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.goods_add_product)
+        setContentView(R.layout.goods_item_popup)
 
         intent.getStringExtra(GoodsActivity.EXTRA_GOODS_UNIT)?.apply {
             add_product_unit.text = this
@@ -23,7 +24,11 @@ class GoodsAddWindow : PopupWindow() {
         intent.getStringExtra(GoodsActivity.EXTRA_GOODS_NAME)?.apply {
             goods_product_name.text = this
         }
-
+        intent.getIntExtra(GoodsActivity.EXTRA_GOODS_VOLUME, 0).apply {
+            if (this > 0) {
+                add_product_volume?.setText(this.toString())
+            }
+        }
     }
 
     fun onAddProductClicked(view: View) {

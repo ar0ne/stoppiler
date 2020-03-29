@@ -11,9 +11,10 @@
     <string name="female">Female</string>
     <string name="sex">Sex</string>
     <string name="add">Add</string>
+    <string name="save">Save</string>
     <string name="cancel">Cancel</string>
-    <string name="crowd.person.remove.title">Confirm action</string>
-    <string name="crowd.person.remove.text">Would you like to remove this person?</string>
+    <string name="remove.alert.title">Confirm action</string>
+    <string name="remove.alert.confirmation.text">Would you like to remove it?</string>
     <string name="main.title">Goods</string>
     <string name="toilet.paper">Toilet Paper</string>
     <string name="food">Food</string>

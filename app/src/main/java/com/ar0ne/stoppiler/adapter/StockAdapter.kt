@@ -3,6 +3,8 @@ package com.ar0ne.stoppiler.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -10,7 +12,7 @@ import com.ar0ne.stoppiler.R
 import com.ar0ne.stoppiler.domain.Stock
 import com.ar0ne.stoppiler.domain.StockRecord
 
-class StockAdapter(var stock: Stock, val callback: Callback) :
+class StockAdapter(var stock: Stock, val callback: Callback, val removeCallback: Callback) :
     RecyclerView.Adapter<StockAdapter.MainHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = MainHolder(
@@ -30,6 +32,7 @@ class StockAdapter(var stock: Stock, val callback: Callback) :
         private val productName = itemView.findViewById<TextView>(R.id.product_name)
         private val productPhoto = itemView.findViewById<ImageView>(R.id.product_photo)
         private val productVolume = itemView.findViewById<TextView>(R.id.product_volume)
+        private val btnRemove = itemView.findViewById<ImageButton>(R.id.product_btn_remove)
         fun bind(record: StockRecord) {
             productName.text = record.goods.name
             productVolume.text = " / ${record.volume} ${record.goods.unit.repr}"
@@ -37,6 +40,10 @@ class StockAdapter(var stock: Stock, val callback: Callback) :
 
             itemView.setOnClickListener {
                 if (adapterPosition != RecyclerView.NO_POSITION) callback.onItemClicked(stock.getRecord(adapterPosition))
+            }
+
+            btnRemove.setOnClickListener {
+                if (adapterPosition != RecyclerView.NO_POSITION) removeCallback.onItemClicked(stock.getRecord(adapterPosition))
             }
         }
     }

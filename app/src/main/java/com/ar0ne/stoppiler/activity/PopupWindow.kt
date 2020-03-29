@@ -23,6 +23,8 @@ abstract class PopupWindow : AppCompatActivity() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        initViews(mainView, backgroundView)
+
         super.onCreate(savedInstanceState)
         overridePendingTransition(0, 0)
 
@@ -91,5 +93,7 @@ abstract class PopupWindow : AppCompatActivity() {
         })
         colorAnimation.start()
     }
+
+    abstract fun initViews(main: View?, background: View?)
 
 }
