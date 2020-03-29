@@ -23,7 +23,6 @@ class CrowdActivity : AppCompatActivity() {
 
     companion object {
         const val ADD_PERSON_REQUEST = 3
-        const val PREFERENCE_FILE_KEY = "crowd"
         const val USERS_KEY = "users"
 
         inline fun <reified T> parseArray(json: String, typeToken: Type): T {
@@ -32,8 +31,6 @@ class CrowdActivity : AppCompatActivity() {
         }
     }
 
-    private var sPref: SharedPreferences? = null
-
     private var crowdAdapter: CrowdAdapter? = null
 
     private var users: MutableList<User> = mutableListOf()
@@ -41,8 +38,6 @@ class CrowdActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_crowd)
-
-        sPref = getSharedPreferences(PREFERENCE_FILE_KEY, Context.MODE_PRIVATE)
 
         loadData()
 
@@ -90,6 +85,7 @@ class CrowdActivity : AppCompatActivity() {
                 users.add(user)
                 crowdAdapter?.notifyDataSetChanged()
                 crowd_next.setEnabled(isNextButtonEnabled())
+                saveData()
             }
         }
     }
@@ -117,7 +113,7 @@ class CrowdActivity : AppCompatActivity() {
     }
 
     private fun loadData() {
-        val usersJson: String? = sPref!!.getString(USERS_KEY, null)
+        val usersJson: String? = MainActivity.sPref!!.getString(USERS_KEY, null)
         usersJson?.let {
             val type = object : TypeToken<MutableList<User>>() {}.type
             val result: MutableList<User> =
@@ -129,7 +125,7 @@ class CrowdActivity : AppCompatActivity() {
     private fun saveData() {
         val usersJson = Gson().toJson(users)
         usersJson?.let {
-            with(sPref!!.edit()) {
+            with(MainActivity.sPref!!.edit()) {
                 putString(USERS_KEY, it)
                 commit()
             }

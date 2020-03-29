@@ -3,7 +3,7 @@ package com.ar0ne.stoppiler.domain
 enum class GoodsType {
     FOOD,
     WATER,
-    HOME,
+    TOILET_PAPER,
     // @TODO: add rest types
 }
 
@@ -21,7 +21,7 @@ enum class Units (val repr: String) {
 data class Goods(
     val name: String,
     val type: GoodsType,
-    val dailyRate: Double,
+    val calories: Double,
     val unit: Units = Units.GRAM,
     val priority: Priority = Priority.LOW
 )

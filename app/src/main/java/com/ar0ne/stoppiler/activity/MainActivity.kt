@@ -6,7 +6,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -14,6 +13,7 @@ import com.ar0ne.stoppiler.R
 import com.ar0ne.stoppiler.adapter.StockAdapter
 import com.ar0ne.stoppiler.domain.*
 import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.Collections.max
 
@@ -21,11 +21,7 @@ import java.util.Collections.max
 class MainActivity : AppCompatActivity() {
 
     private var introShown = false
-
     private var stockAdapter: StockAdapter? = null
-
-    private var sPref: SharedPreferences? = null
-
     private var stock: Stock? = null
 
     companion object {
@@ -35,17 +31,17 @@ class MainActivity : AppCompatActivity() {
         const val SHOW_UPDATE_GOODS_REQUEST = 9
         const val SHOW_HELP_REQUEST = 11
 
-        const val PREFERENCE_FILE_MAIN = "main"
         const val INTRO_SHOWN_KEY = "intro"
         const val STOCK_KEY = "stock"
 
+        var sPref: SharedPreferences? = null
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        sPref = getSharedPreferences(PREFERENCE_FILE_MAIN, Context.MODE_PRIVATE)
+        sPref = getPreferences(Context.MODE_PRIVATE)
 
         loadData()
 
@@ -59,13 +55,19 @@ class MainActivity : AppCompatActivity() {
             })
 
         main_goods_recycler_view.adapter = stockAdapter
-        updateProgress()
+
+        updateEstimations()
 
         if (!introShown) {
             val intent = Intent(this, IntroActivity::class.java)
             startActivityForResult(intent, SHOW_INTRO_REQUEST)
         }
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+        updateEstimations()
     }
 
     override fun onStop() {
@@ -75,6 +77,7 @@ class MainActivity : AppCompatActivity() {
 
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        updateEstimations()
         when (requestCode) {
             SHOW_INTRO_REQUEST -> {
                 introShown = true
@@ -90,13 +93,10 @@ class MainActivity : AppCompatActivity() {
                         product?.apply {
                             stock?.addRecord(this, productVolume)
                             stockAdapter?.notifyDataSetChanged()
-                            updateProgress()
+                            saveData()
                         }
                     }
                 }
-            }
-            SHOW_CROWD_REQUEST -> {
-
             }
             SHOW_UPDATE_GOODS_REQUEST -> {
                 if (resultCode == Activity.RESULT_OK) {
@@ -107,11 +107,12 @@ class MainActivity : AppCompatActivity() {
                         stock?.getRecord(productName)?.apply {
                             this.volume = productVolume
                             stockAdapter?.notifyDataSetChanged()
-                            updateProgress()
+                            saveData()
                         }
                     }
                 }
             }
+            SHOW_CROWD_REQUEST -> {}
         }
     }
 
@@ -140,20 +141,33 @@ class MainActivity : AppCompatActivity() {
     }
 
     @SuppressLint("SetTextI18n")
-    fun updateProgress() {
-        val foodEstimation = stock!!.getFoodEstimation()
-        val waterEstimation = stock!!.getWaterEstimation()
-        val paperEstimation = stock!!.getToiletPaperEstimation()
-        val max = max(listOf(foodEstimation, waterEstimation, paperEstimation))
-        food_progressBar.max = max
-        water_progressBar.max = max
-        toiletPaper_progressBar.max = max
-        food_progressBar.setProgress(foodEstimation, true)
-        water_progressBar.setProgress(waterEstimation, true)
-        toiletPaper_progressBar.setProgress(paperEstimation, true)
-        food_estimation.text = "$foodEstimation days"
-        water_estimation.text = "$waterEstimation days"
-        paper_estimation.text = "$paperEstimation days"
+    fun updateEstimations() {
+        val users = getUsers() ?: return
+        val usersCaloriesDailyRate = users.sumByDouble {
+            it.HarrisBenedictEquation().metabolicRate()
+        }
+        val usersWaterDailyRate = users.size.toDouble()
+        val userToiletPaperDailyRate = users.size.toDouble()
+
+        val foodEstimationInDays = stock!!.getFoodEstimation(usersCaloriesDailyRate)
+        val waterEstimationInDays = stock!!.getWaterEstimation(usersWaterDailyRate)
+        val paperEstimationInDays = stock!!.getToiletPaperEstimation(userToiletPaperDailyRate)
+
+        val max = max(listOf(foodEstimationInDays, waterEstimationInDays, paperEstimationInDays))
+
+        food_progressBar.max = max.toInt()
+        water_progressBar.max = max.toInt()
+        toiletPaper_progressBar.max = max.toInt()
+
+        food_progressBar.setProgress(foodEstimationInDays.toInt(), true)
+        water_progressBar.setProgress(waterEstimationInDays.toInt(), true)
+        toiletPaper_progressBar.setProgress(paperEstimationInDays.toInt(), true)
+
+        food_estimation.text = "%.1f days".format(foodEstimationInDays)
+        water_estimation.text =
+            if (waterEstimationInDays > 0) "%.1f days".format(waterEstimationInDays) else "-"
+        paper_estimation.text =
+            if (paperEstimationInDays > 0) "%.1f days".format(paperEstimationInDays) else "-"
     }
 
 
@@ -166,6 +180,8 @@ class MainActivity : AppCompatActivity() {
             setPositiveButton(android.R.string.yes) { _, _ ->
                 stock?.removeRecord(record)
                 stockAdapter?.notifyDataSetChanged()
+                saveData()
+                updateEstimations()
             }
             setNegativeButton(android.R.string.no) { dialog, which -> }
             show()
@@ -195,5 +211,14 @@ class MainActivity : AppCompatActivity() {
             putBoolean(INTRO_SHOWN_KEY, introShown)
             commit()
         }
+    }
+
+    fun getUsers(): MutableList<User>? {
+        val usersJson: String? = sPref!!.getString(CrowdActivity.USERS_KEY, null)
+        if (usersJson != null) {
+            val type = object : TypeToken<MutableList<User>>() {}.type
+            return CrowdActivity.parseArray(json = usersJson, typeToken = type)
+        }
+        return mutableListOf()
     }
 }

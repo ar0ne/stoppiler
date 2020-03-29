@@ -21,11 +21,8 @@ class GoodsActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
 
     companion object {
         var goods = mutableListOf(
-            Goods("Bread", GoodsType.FOOD, 500.0, Units.GRAM, Priority.MEDIUM),
-            Goods("Salat", GoodsType.FOOD, 200.0, Units.GRAM, Priority.LOW),
-            Goods("Meat", GoodsType.FOOD, 400.0, Units.GRAM, Priority.MEDIUM),
-            Goods("Orange Juice", GoodsType.WATER, 1.0, Units.LITER, Priority.MEDIUM),
-            Goods("Toilet Paper", GoodsType.HOME, 1.0, Units.METER, Priority.HIGH)
+//            Goods("Toilet Paper", GoodsType.TOILET_PAPER, 1.94, Units.METER, Priority.HIGH),
+            Goods("Buckwheat Cereal", GoodsType.FOOD, 3.29, Units.GRAM, Priority.MEDIUM)
         )
         const val SHOW_ADD_GOODS_REQUEST = 8
         const val EXTRA_GOODS_NAME = "name"

@@ -19,22 +19,25 @@ class Stock(private var records: MutableList<StockRecord> = mutableListOf()) {
         return records[index]
     }
 
-    fun getFoodEstimation(): Int {
+    fun getFoodEstimation(dailyRate: Double): Double {
         return records.filter {
             it.goods.type == GoodsType.FOOD
-        }.sumBy { (it.volume * it.goods.dailyRate).toInt() }
+        }.sumByDouble { (it.volume * it.goods.calories) }
+            .div(dailyRate)
     }
 
-    fun getWaterEstimation(): Int {
+    fun getWaterEstimation(dailyRate: Double): Double {
         return records.filter {
             it.goods.type == GoodsType.WATER
-        }.sumBy { (it.volume * it.goods.dailyRate).toInt() }
+        }.sumByDouble { (it.volume * it.goods.calories) }
+            .div(dailyRate)
     }
 
-    fun getToiletPaperEstimation(): Int {
+    fun getToiletPaperEstimation(dailyRate: Double): Double {
         return records.filter {
-            it.goods.type == GoodsType.HOME
-        }.sumBy { (it.volume * it.goods.dailyRate).toInt() }
+            it.goods.type == GoodsType.TOILET_PAPER
+        }.sumByDouble { (it.volume * it.goods.calories) }
+            .div(dailyRate)
     }
 
     fun getRecord(goodsName: String): StockRecord? {
@@ -52,7 +55,7 @@ class Stock(private var records: MutableList<StockRecord> = mutableListOf()) {
 //        goods[item] = currentVolume.plus(volume)
 //    }
 //
-//    fun subtract(item: Goods, diff: Double = item.dailyRate) {
+//    fun subtract(item: Goods, diff: Double = item.calories) {
 //        val currentVolume: Double = goods[item] ?: 0.0
 //        val updatedVolume = currentVolume.minus(diff)
 //        goods[item] = if (updatedVolume > 0) updatedVolume else 0.0
@@ -60,7 +63,7 @@ class Stock(private var records: MutableList<StockRecord> = mutableListOf()) {
 //
 //    fun left(item: Goods): Double {
 //        val volume: Double = goods[item] ?: 0.0
-//        return volume / item.dailyRate
+//        return volume / item.calories
 //    }
 //
 //    override fun toString(): String {
