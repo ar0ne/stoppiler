@@ -9,7 +9,9 @@ import com.ar0ne.stoppiler.R
 
 class IntroActivity : AppCompatActivity() {
 
-    val SHOW_CROWD_LIST_REQUEST = 2
+    companion object {
+        const val SHOW_CROWD_LIST_REQUEST = 2
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

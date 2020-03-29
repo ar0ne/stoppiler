@@ -33,17 +33,14 @@ class MainActivity : AppCompatActivity() {
 
         const val INTRO_SHOWN_KEY = "intro"
         const val STOCK_KEY = "stock"
-
-        var sPref: SharedPreferences? = null
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        sPref = getPreferences(Context.MODE_PRIVATE)
-
         loadData()
+        saveData()
 
         stockAdapter = StockAdapter(
             stock!!,
@@ -112,7 +109,8 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
             }
-            SHOW_CROWD_REQUEST -> {}
+            SHOW_CROWD_REQUEST -> {
+            }
         }
     }
 
@@ -142,7 +140,12 @@ class MainActivity : AppCompatActivity() {
 
     @SuppressLint("SetTextI18n")
     fun updateEstimations() {
+        if (stock == null || stock?.size() == 0) {
+            return
+        }
+
         val users = getUsers() ?: return
+
         val usersCaloriesDailyRate = users.sumByDouble {
             it.HarrisBenedictEquation().metabolicRate()
         }
@@ -190,8 +193,9 @@ class MainActivity : AppCompatActivity() {
 
 
     fun loadData() {
-        introShown = sPref!!.getBoolean(INTRO_SHOWN_KEY, false)
-        val stockJson: String? = sPref!!.getString(STOCK_KEY, null)
+        val sPref = getSharedPreferences("stop",Context.MODE_PRIVATE)
+        introShown = sPref?.getBoolean(INTRO_SHOWN_KEY, false) ?: false
+        val stockJson: String? = sPref?.getString(STOCK_KEY, null)
         var savedStock: Stock? = null
         if (stockJson != null) {
             savedStock = Gson().fromJson(stockJson, Stock::class.java)
@@ -200,6 +204,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun saveData() {
+        val sPref = getSharedPreferences("stop",Context.MODE_PRIVATE)
         val stockJson = Gson().toJson(stock)
         stockJson?.let {
             with(sPref!!.edit()) {
@@ -214,10 +219,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun getUsers(): MutableList<User>? {
-        val usersJson: String? = sPref!!.getString(CrowdActivity.USERS_KEY, null)
-        if (usersJson != null) {
-            val type = object : TypeToken<MutableList<User>>() {}.type
-            return CrowdActivity.parseArray(json = usersJson, typeToken = type)
+        val sPref = getSharedPreferences("stop", Context.MODE_PRIVATE)
+        if (sPref.contains("users")) {
+            val usersJson: String? = sPref.getString("users", null)
+            if (usersJson != null) {
+                val type = object : TypeToken<MutableList<User>>() {}.type
+                return CrowdActivity.parseArray(json = usersJson, typeToken = type)
+            }
         }
         return mutableListOf()
     }

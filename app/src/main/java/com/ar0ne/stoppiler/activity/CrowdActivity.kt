@@ -113,7 +113,8 @@ class CrowdActivity : AppCompatActivity() {
     }
 
     private fun loadData() {
-        val usersJson: String? = MainActivity.sPref!!.getString(USERS_KEY, null)
+        val sPref = getSharedPreferences("stop",Context.MODE_PRIVATE)
+        val usersJson: String? = sPref?.getString(USERS_KEY, null)
         usersJson?.let {
             val type = object : TypeToken<MutableList<User>>() {}.type
             val result: MutableList<User> =
@@ -123,9 +124,10 @@ class CrowdActivity : AppCompatActivity() {
     }
 
     private fun saveData() {
+        val sPref = getSharedPreferences("stop",Context.MODE_PRIVATE)
         val usersJson = Gson().toJson(users)
         usersJson?.let {
-            with(MainActivity.sPref!!.edit()) {
+            with(sPref!!.edit()) {
                 putString(USERS_KEY, it)
                 commit()
             }

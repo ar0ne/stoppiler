@@ -1,7 +1,9 @@
 package com.ar0ne.stoppiler.activity
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -19,10 +21,35 @@ class GoodsActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
 
     companion object {
         var goods = mutableListOf(
-//            Goods("Toilet Paper", GoodsType.TOILET_PAPER, 1.94, Units.METER, Priority.HIGH),
-            Goods("Buckwheat Cereal", GoodsType.FOOD, 3.29, Units.GRAM, Priority.MEDIUM)
+            Goods("Toilet Paper", GoodsType.TOILET_PAPER, 1.94, Units.METER, Priority.HIGH),
+
+            Goods("Buckwheat Cereal", GoodsType.FOOD, 3.29, Units.GRAM, Priority.MEDIUM),
+            Goods("Rice", GoodsType.FOOD, 3.3, Units.GRAM, Priority.MEDIUM),
+            Goods("Pasta", GoodsType.FOOD, 3.58, Units.GRAM, Priority.MEDIUM),
+            Goods("Bread", GoodsType.FOOD, 2.39, Units.GRAM, Priority.MEDIUM),
+            Goods("Eggs", GoodsType.FOOD, 1.53, Units.GRAM, Priority.LOW),
+            Goods("Orange", GoodsType.FOOD, 0.38, Units.GRAM, Priority.LOW),
+            Goods("Banana", GoodsType.FOOD, 0.87, Units.GRAM, Priority.LOW),
+            Goods("Apple", GoodsType.FOOD, 0.48, Units.GRAM, Priority.LOW),
+            Goods("Pear", GoodsType.FOOD, 0.41, Units.GRAM, Priority.LOW),
+            Goods("Fish", GoodsType.FOOD, 1.28, Units.GRAM, Priority.MEDIUM),
+            Goods("Chicken", GoodsType.FOOD, 1.6, Units.GRAM, Priority.MEDIUM),
+            Goods("Pork", GoodsType.FOOD, 4.01, Units.GRAM, Priority.MEDIUM),
+            Goods("Beef", GoodsType.FOOD, 1.91, Units.GRAM, Priority.MEDIUM),
+            Goods("Cheese", GoodsType.FOOD, 3.52, Units.GRAM, Priority.MEDIUM),
+            Goods("Carrot", GoodsType.FOOD, 0.29, Units.GRAM, Priority.LOW),
+            Goods("Tomato", GoodsType.FOOD, 0.12, Units.GRAM, Priority.LOW),
+            Goods("Salad", GoodsType.FOOD, 0.15, Units.GRAM, Priority.LOW),
+            Goods("A Pineapple", GoodsType.FOOD, 0.49, Units.GRAM, Priority.LOW),
+            Goods("Chocolate", GoodsType.FOOD, 5.52, Units.GRAM, Priority.MEDIUM),
+            Goods("Salami", GoodsType.FOOD, 5.36, Units.GRAM, Priority.MEDIUM),
+
+            Goods("Plain Water", GoodsType.WATER, 2.0, Units.LITER, Priority.HIGH),
+            Goods("Orange Juice", GoodsType.WATER, 2.0, Units.LITER, Priority.MEDIUM),
+            Goods("Milk", GoodsType.WATER, 2.0, Units.LITER, Priority.LOW)
         )
         var filteredGoods: MutableList<Goods>? = null
+
 
         const val SHOW_ADD_GOODS_REQUEST = 8
         const val EXTRA_GOODS_NAME = "name"
@@ -90,7 +117,8 @@ class GoodsActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
     }
 
     private fun getUsersGoodsNames(): List<String> {
-        val stockJson: String? = MainActivity.sPref!!.getString(MainActivity.STOCK_KEY, null)
+        val sPref = getSharedPreferences("stop", Context.MODE_PRIVATE)
+        val stockJson: String? = sPref?.getString(MainActivity.STOCK_KEY, null)
         if (stockJson != null) {
             val stock = Gson().fromJson(stockJson, Stock::class.java)
             return stock.getGoodsNames()
