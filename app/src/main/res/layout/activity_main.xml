@@ -119,7 +119,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/main_goods_recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="500dp"
+        android:layout_height="700dp"
         android:padding="8dp"
         android:scrollbars="vertical"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
