@@ -77,7 +77,7 @@ class GoodsActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
                 val item = parent.getItemAtPosition(position) as Goods
                 val intent = Intent(this, GoodsItemWindow::class.java)
                 intent.putExtra(EXTRA_GOODS_NAME, item.name)
-                intent.putExtra(EXTRA_GOODS_UNIT, item.unit.repr)
+                intent.putExtra(EXTRA_GOODS_UNIT, item.unit.toString().toLowerCase())
                 startActivityForResult(intent, SHOW_ADD_GOODS_REQUEST)
             }
     }

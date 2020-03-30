@@ -3,6 +3,8 @@ package com.ar0ne.stoppiler.activity
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
 import com.ar0ne.stoppiler.R
 import kotlinx.android.synthetic.main.goods_item_popup.*
@@ -29,6 +31,17 @@ class GoodsItemWindow : PopupWindow() {
                 add_product_volume?.setText(this.toString())
             }
         }
+
+        add_product_btn_save.setEnabled(isBtnSaveEnabled())
+
+        add_product_volume.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {}
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                add_product_btn_save.setEnabled(isBtnSaveEnabled())
+            }
+        })
+
     }
 
     fun onAddProductClicked(view: View) {
@@ -44,6 +57,10 @@ class GoodsItemWindow : PopupWindow() {
     fun onCancelAddProductClicked(view: View) {
         setResult(Activity.RESULT_CANCELED)
         finish()
+    }
+
+    private fun isBtnSaveEnabled(): Boolean {
+        return add_product_volume.text.isNotBlank()
     }
 
 }

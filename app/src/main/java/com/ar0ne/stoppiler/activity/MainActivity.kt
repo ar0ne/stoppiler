@@ -60,6 +60,8 @@ class MainActivity : AppCompatActivity() {
             startActivityForResult(intent, SHOW_INTRO_REQUEST)
         }
 
+        main_goods_recycler_view.setHasFixedSize(true)
+
     }
 
     override fun onResume() {
@@ -74,11 +76,9 @@ class MainActivity : AppCompatActivity() {
 
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        updateEstimations()
         when (requestCode) {
             SHOW_INTRO_REQUEST -> {
                 introShown = true
-                saveData()
             }
             SHOW_GOODS_REQUEST -> {
                 if (resultCode == Activity.RESULT_OK) {
@@ -90,7 +90,6 @@ class MainActivity : AppCompatActivity() {
                         product?.apply {
                             stock?.addRecord(this, productVolume)
                             stockAdapter?.notifyDataSetChanged()
-                            saveData()
                         }
                     }
                 }
@@ -104,7 +103,6 @@ class MainActivity : AppCompatActivity() {
                         stock?.getRecord(productName)?.apply {
                             this.volume = productVolume
                             stockAdapter?.notifyDataSetChanged()
-                            saveData()
                         }
                     }
                 }
@@ -112,6 +110,8 @@ class MainActivity : AppCompatActivity() {
             SHOW_CROWD_REQUEST -> {
             }
         }
+        saveData()
+        updateEstimations()
     }
 
 
