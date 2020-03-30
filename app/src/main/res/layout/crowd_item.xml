@@ -46,6 +46,20 @@
             app:layout_constraintBottom_toBottomOf="@+id/person_name"
             app:layout_constraintStart_toEndOf="@+id/person_name" />
 
+        <com.ar0ne.stoppiler.ui.SolidFontAwesomeTextView
+            android:id="@+id/product_btn_remove"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="8dp"
+            android:textSize="24sp"
+            android:text="@string/remove.icon"
+            android:clickable="false"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.cardview.widget.CardView>

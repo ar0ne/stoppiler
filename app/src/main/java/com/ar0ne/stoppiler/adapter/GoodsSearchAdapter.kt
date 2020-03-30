@@ -35,7 +35,7 @@ class GoodsSearchAdapter(
         } else {
             holder = view.tag as ViewHolder
         }
-        holder.name!!.text = GoodsActivity.goods[position].name
+        holder.name!!.text = GoodsActivity.filteredGoods!![position].name
         return view
     }
 
@@ -55,7 +55,7 @@ class GoodsSearchAdapter(
         val loweredSearchText = searchText.toLowerCase(Locale.getDefault())
         GoodsActivity.filteredGoods = mutableListOf()
         if (searchText.isEmpty()) {
-            GoodsActivity.goods = goodsList
+            GoodsActivity.filteredGoods = goodsList
         } else {
             for (product in goodsList) {
                 if (product.name.toLowerCase(Locale.getDefault()).contains(loweredSearchText)) {

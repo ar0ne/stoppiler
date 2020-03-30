@@ -3,7 +3,6 @@ package com.ar0ne.stoppiler.activity
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -57,14 +56,16 @@ class GoodsActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
         const val EXTRA_GOODS_VOLUME = "volume"
     }
 
+    override fun onResume() {
+        super.onResume()
+        loadData()
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_goods)
 
-        val usersGoods = getUsersGoodsNames()
-        filteredGoods = goods.filterNot {
-            it.name in usersGoods
-        }.toMutableList()
+        loadData()
 
         goodsSearchAdapter = GoodsSearchAdapter(this, filteredGoods as ArrayList<Goods>)
 
@@ -124,6 +125,13 @@ class GoodsActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
             return stock.getGoodsNames()
         }
         return listOf()
+    }
+
+    private fun loadData() {
+        val usersGoods = getUsersGoodsNames()
+        filteredGoods = goods.filterNot {
+            it.name in usersGoods
+        }.toMutableList()
     }
 
 }
