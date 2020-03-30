@@ -23,5 +23,6 @@ data class Goods(
     val type: GoodsType,
     val calories: Double,
     val unit: Units = Units.GRAM,
-    val priority: Priority = Priority.LOW
+    val priority: Priority = Priority.LOW,
+    val iconResourceId: Int? = null
 )

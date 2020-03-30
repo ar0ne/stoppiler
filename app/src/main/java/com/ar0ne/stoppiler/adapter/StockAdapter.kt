@@ -59,15 +59,19 @@ class StockAdapter(var stock: Stock, val callback: Callback, val removeCallback:
     }
 
     fun getStockRecordIcon(view: View, record: StockRecord): String {
-        when (record.goods.type) {
+        val resourceId = record.goods.iconResourceId
+        if (resourceId != null) {
+            return view.resources.getString(resourceId)
+        }
+        return when (record.goods.type) {
             GoodsType.FOOD -> {
-                return view.resources.getString(R.string.food_icon)
+                view.resources.getString(R.string.food_icon)
             }
             GoodsType.WATER -> {
-                return view.resources.getString(R.string.water_icon)
+                view.resources.getString(R.string.water_icon)
             }
             GoodsType.TOILET_PAPER -> {
-                return view.resources.getString(R.string.toilet_paper_icon)
+                view.resources.getString(R.string.toilet_paper_icon)
             }
         }
     }
