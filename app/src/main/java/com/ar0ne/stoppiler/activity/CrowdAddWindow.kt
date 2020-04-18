@@ -30,11 +30,11 @@ class CrowdAddWindow : PopupWindow(), CompoundButton.OnCheckedChangeListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.crowd_add_person)
 
-        crowd_person_sex_switch?.setOnCheckedChangeListener(this)
+        crowd_person_sex_switch.setOnCheckedChangeListener(this)
 
         crowd_person_save.setEnabled(isSaveButtonEnabled())
 
-        crowd_person_name.addTextChangedListener(object: TextWatcher{
+        crowd_person_name.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {}
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
@@ -42,7 +42,7 @@ class CrowdAddWindow : PopupWindow(), CompoundButton.OnCheckedChangeListener {
             }
         })
 
-        crowd_person_age.addTextChangedListener(object: TextWatcher{
+        crowd_person_age.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {}
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
@@ -50,7 +50,7 @@ class CrowdAddWindow : PopupWindow(), CompoundButton.OnCheckedChangeListener {
             }
         })
 
-        crowd_person_weight.addTextChangedListener(object: TextWatcher{
+        crowd_person_weight.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {}
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
@@ -58,7 +58,7 @@ class CrowdAddWindow : PopupWindow(), CompoundButton.OnCheckedChangeListener {
             }
         })
 
-        crowd_person_height.addTextChangedListener(object: TextWatcher{
+        crowd_person_height.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {}
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
@@ -76,7 +76,7 @@ class CrowdAddWindow : PopupWindow(), CompoundButton.OnCheckedChangeListener {
     fun onSavePersonClicked(view: View) {
         val result = Intent()
         val sex = if (crowd_person_sex_switch.isChecked) Sex.FEMALE else Sex.MALE
-        val name = crowd_person_name.text.toString()
+        val name = crowd_person_name.text.toString().trim()
         val age = crowd_person_age.text.toString().toInt()
         val weight = crowd_person_weight.text.toString().toInt()
         val height = crowd_person_height.text.toString().toInt()
@@ -90,17 +90,14 @@ class CrowdAddWindow : PopupWindow(), CompoundButton.OnCheckedChangeListener {
     }
 
     override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
-        if (isChecked) {
-            crowd_person_sex_switch.setText(R.string.female)
-        } else {
-            crowd_person_sex_switch.setText(R.string.male)
-        }
+        val sexIconResource = if (isChecked) R.string.female else R.string.male
+        crowd_person_sex_switch.setText(sexIconResource)
     }
 
     private fun isSaveButtonEnabled(): Boolean {
-        return crowd_person_name.text.isNotEmpty() &&
-                crowd_person_age.text.isNotEmpty() &&
-                crowd_person_weight.text.isNotEmpty() &&
-                crowd_person_height.text.isNotEmpty()
+        return crowd_person_name.text.isNotBlank() &&
+                crowd_person_age.text.isNotBlank() &&
+                crowd_person_weight.text.isNotBlank() &&
+                crowd_person_height.text.isNotBlank()
     }
 }

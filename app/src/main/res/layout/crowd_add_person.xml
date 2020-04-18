@@ -98,8 +98,6 @@
                 android:layout_marginStart="4dp"
                 android:layout_marginTop="21dp"
                 android:text="@string/male"
-                android:textOff="@string/female"
-                android:textOn="@string/male"
                 app:layout_constraintEnd_toEndOf="@+id/crowd_person_age"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@+id/crowd_person_name"

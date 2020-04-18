@@ -20,15 +20,15 @@ class GoodsItemWindow : PopupWindow() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.goods_item_popup)
 
-        intent.getStringExtra(GoodsActivity.EXTRA_GOODS_UNIT)?.apply {
-            add_product_unit.text = this
+        intent.getStringExtra(GoodsActivity.EXTRA_GOODS_UNIT)?.let {
+            add_product_unit.text = it
         }
-        intent.getStringExtra(GoodsActivity.EXTRA_GOODS_NAME)?.apply {
-            goods_product_name.text = this
+        intent.getStringExtra(GoodsActivity.EXTRA_GOODS_NAME)?.let {
+            goods_product_name.text = it
         }
-        intent.getIntExtra(GoodsActivity.EXTRA_GOODS_VOLUME, 0).apply {
-            if (this > 0) {
-                add_product_volume?.setText(this.toString())
+        intent.getIntExtra(GoodsActivity.EXTRA_GOODS_VOLUME, 0).let {
+            if (it > 0) {
+                add_product_volume.setText(it.toString())
             }
         }
 
@@ -41,7 +41,6 @@ class GoodsItemWindow : PopupWindow() {
                 add_product_btn_save.setEnabled(isBtnSaveEnabled())
             }
         })
-
     }
 
     fun onAddProductClicked(view: View) {

@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AlertDialog
@@ -21,8 +20,9 @@ import java.util.Collections.max
 class MainActivity : AppCompatActivity() {
 
     private var introShown = false
-    private var stockAdapter: StockAdapter? = null
-    private var stock: Stock? = null
+
+    lateinit var stock: Stock
+    private lateinit var stockAdapter: StockAdapter
 
     companion object {
         const val SHOW_INTRO_REQUEST = 1
@@ -43,7 +43,7 @@ class MainActivity : AppCompatActivity() {
         saveData()
 
         stockAdapter = StockAdapter(
-            stock!!,
+            stock,
             object : StockAdapter.Callback {
                 override fun onItemClicked(record: StockRecord) = showUpdateProductView(record)
             },
@@ -88,8 +88,8 @@ class MainActivity : AppCompatActivity() {
                         // @todo: get data from dataSource
                         val product: Goods? = GoodsActivity.goods.find { it.name == productName }
                         product?.apply {
-                            stock?.addRecord(this, productVolume)
-                            stockAdapter?.notifyDataSetChanged()
+                            stock.addRecord(this, productVolume)
+                            stockAdapter.notifyDataSetChanged()
                         }
                     }
                 }
@@ -100,9 +100,9 @@ class MainActivity : AppCompatActivity() {
                     val productVolume = data?.getIntExtra(GoodsActivity.EXTRA_GOODS_VOLUME, 0)
                     if (productName != null && productVolume != null && productVolume > 0) {
                         // @todo: get data from dataSource
-                        stock?.getRecord(productName)?.apply {
+                        stock.getRecord(productName)?.apply {
                             this.volume = productVolume
-                            stockAdapter?.notifyDataSetChanged()
+                            stockAdapter.notifyDataSetChanged()
                         }
                     }
                 }
@@ -140,7 +140,7 @@ class MainActivity : AppCompatActivity() {
 
     @SuppressLint("SetTextI18n")
     fun updateEstimations() {
-        if (stock == null || stock?.size() == 0) {
+        if (stock.isEmpty) {
             return
         }
 
@@ -152,9 +152,9 @@ class MainActivity : AppCompatActivity() {
         val usersWaterDailyRate = users.size.toDouble()
         val userToiletPaperDailyRate = users.size.toDouble()
 
-        val foodEstimationInDays = stock!!.getFoodEstimation(usersCaloriesDailyRate)
-        val waterEstimationInDays = stock!!.getWaterEstimation(usersWaterDailyRate)
-        val paperEstimationInDays = stock!!.getToiletPaperEstimation(userToiletPaperDailyRate)
+        val foodEstimationInDays = stock.getFoodEstimation(usersCaloriesDailyRate)
+        val waterEstimationInDays = stock.getWaterEstimation(usersWaterDailyRate)
+        val paperEstimationInDays = stock.getToiletPaperEstimation(userToiletPaperDailyRate)
 
         val max = max(listOf(foodEstimationInDays, waterEstimationInDays, paperEstimationInDays))
 
@@ -166,11 +166,22 @@ class MainActivity : AppCompatActivity() {
         water_progressBar.setProgress(waterEstimationInDays.toInt(), true)
         toiletPaper_progressBar.setProgress(paperEstimationInDays.toInt(), true)
 
-        food_estimation.text = "%.1f days".format(foodEstimationInDays)
+        val notAvailable = resources.getString(R.string.estimation_not_available)
+        food_estimation.text =
+            if (foodEstimationInDays > 0) resources.getString(
+                R.string.goods_estimation_pattern,
+                foodEstimationInDays
+            ) else notAvailable
         water_estimation.text =
-            if (waterEstimationInDays > 0) "%.1f days".format(waterEstimationInDays) else "-"
+            if (waterEstimationInDays > 0) resources.getString(
+                R.string.goods_estimation_pattern,
+                waterEstimationInDays
+            ) else notAvailable
         paper_estimation.text =
-            if (paperEstimationInDays > 0) "%.1f days".format(paperEstimationInDays) else "-"
+            if (paperEstimationInDays > 0) resources.getString(
+                R.string.goods_estimation_pattern,
+                paperEstimationInDays
+            ) else notAvailable
     }
 
 
@@ -181,8 +192,8 @@ class MainActivity : AppCompatActivity() {
             setTitle(R.string.remove_alert_title)
             setMessage(R.string.remove_alert_confirmation_text)
             setPositiveButton(android.R.string.yes) { _, _ ->
-                stock?.removeRecord(record)
-                stockAdapter?.notifyDataSetChanged()
+                stock.removeRecord(record)
+                stockAdapter.notifyDataSetChanged()
                 saveData()
                 updateEstimations()
             }
@@ -192,8 +203,8 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    fun loadData() {
-        val sPref = getSharedPreferences("stop",Context.MODE_PRIVATE)
+    private fun loadData() {
+        val sPref = getSharedPreferences("stop", Context.MODE_PRIVATE)
         introShown = sPref?.getBoolean(INTRO_SHOWN_KEY, false) ?: false
         val stockJson: String? = sPref?.getString(STOCK_KEY, null)
         var savedStock: Stock? = null
@@ -203,8 +214,8 @@ class MainActivity : AppCompatActivity() {
         stock = savedStock ?: Stock()
     }
 
-    fun saveData() {
-        val sPref = getSharedPreferences("stop",Context.MODE_PRIVATE)
+    private fun saveData() {
+        val sPref = getSharedPreferences("stop", Context.MODE_PRIVATE)
         val stockJson = Gson().toJson(stock)
         stockJson?.let {
             with(sPref!!.edit()) {
@@ -218,7 +229,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun getUsers(): MutableList<User>? {
+    private fun getUsers(): MutableList<User>? {
         val sPref = getSharedPreferences("stop", Context.MODE_PRIVATE)
         if (sPref.contains("users")) {
             val usersJson: String? = sPref.getString("users", null)

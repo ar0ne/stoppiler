@@ -49,4 +49,6 @@
     <string name="help.title">Help</string>
     <string name="help.text">TBD</string>
     <string name="product.volume.pattern">%d %s</string>
+    <string name="goods.estimation.pattern">%.1f days</string>
+    <string name="estimation.not.available">-</string>
 </resources>

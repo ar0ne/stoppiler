@@ -13,11 +13,13 @@ class Stock(private var records: MutableList<StockRecord> = mutableListOf()) {
         records.add(newRecord)
     }
 
-    fun size(): Int = records.size
+    val size: Int
+        get() = records.size
 
-    fun getRecord(index: Int): StockRecord {
-        return records[index]
-    }
+    val isEmpty: Boolean
+        get() = size == 0
+
+    fun getRecord(index: Int): StockRecord = records[index]
 
     fun getFoodEstimation(dailyRate: Double): Double {
         return records.filter {

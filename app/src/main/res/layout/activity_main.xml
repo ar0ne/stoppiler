@@ -41,8 +41,9 @@
                 android:layout_alignParentTop="true"
                 android:layout_alignParentBottom="true"
                 android:layout_marginStart="16dp"
+                android:layout_marginEnd="56dp"
                 app:layout_constraintStart_toEndOf="@+id/main_home"
-                app:layout_constraintTop_toTopOf="@+id/main_food" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <ProgressBar
                 android:id="@+id/water_progressBar"
@@ -102,14 +103,20 @@
                 android:id="@+id/water_estimation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="@+id/food_estimation"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/water_progressBar"
                 app:layout_constraintTop_toTopOf="@+id/water_progressBar" />
 
             <TextView
                 android:id="@+id/paper_estimation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="@+id/water_estimation"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/toiletPaper_progressBar"
                 app:layout_constraintTop_toTopOf="@+id/toiletPaper_progressBar" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

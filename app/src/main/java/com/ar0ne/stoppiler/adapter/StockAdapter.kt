@@ -26,7 +26,7 @@ class StockAdapter(var stock: Stock, val callback: Callback, val removeCallback:
         )
     )
 
-    override fun getItemCount() = stock.size()
+    override fun getItemCount() = stock.size
     override fun onBindViewHolder(holder: MainHolder, position: Int) {
         holder.bind(stock.getRecord(position))
     }

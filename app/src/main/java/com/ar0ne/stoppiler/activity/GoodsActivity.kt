@@ -133,7 +133,4 @@ class GoodsActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
             it.name in usersGoods
         }.toMutableList()
     }
-
-    fun getIconString(resourceId: Int) = resources.getString(resourceId)
-
 }

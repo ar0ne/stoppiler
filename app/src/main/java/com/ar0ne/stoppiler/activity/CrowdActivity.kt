@@ -31,7 +31,7 @@ class CrowdActivity : AppCompatActivity() {
         }
     }
 
-    private var crowdAdapter: CrowdAdapter? = null
+    private lateinit var crowdAdapter: CrowdAdapter
 
     private var users: MutableList<User> = mutableListOf()
 
@@ -76,14 +76,14 @@ class CrowdActivity : AppCompatActivity() {
 
                 // @TODO: default value based on sex ?
                 val weight: Int = if (extraWeight > 0) extraWeight else 70
-                val height: Int =  if (extraHeight in 1..229) extraHeight else 170
+                val height: Int = if (extraHeight in 1..229) extraHeight else 170
                 val age: Int = if (extraAge in 1..99) extraAge else 30
                 val sex: Sex = if (Sex.valueOf(extraSex) == Sex.MALE) Sex.MALE else Sex.FEMALE
 
                 val user = User(name, age, sex, weight, height)
 
                 users.add(user)
-                crowdAdapter?.notifyDataSetChanged()
+                crowdAdapter.notifyDataSetChanged()
                 crowd_next.setEnabled(isNextButtonEnabled())
                 saveData()
             }
@@ -98,7 +98,7 @@ class CrowdActivity : AppCompatActivity() {
             setMessage(R.string.remove_alert_confirmation_text)
             setPositiveButton(android.R.string.yes) { _, _ ->
                 users.remove(user)
-                crowdAdapter?.notifyDataSetChanged()
+                crowdAdapter.notifyDataSetChanged()
                 crowd_next.setEnabled(isNextButtonEnabled())
             }
             setNegativeButton(android.R.string.no) { dialog, which -> }
@@ -113,7 +113,7 @@ class CrowdActivity : AppCompatActivity() {
     }
 
     private fun loadData() {
-        val sPref = getSharedPreferences("stop",Context.MODE_PRIVATE)
+        val sPref = getSharedPreferences("stop", Context.MODE_PRIVATE)
         val usersJson: String? = sPref?.getString(USERS_KEY, null)
         usersJson?.let {
             val type = object : TypeToken<MutableList<User>>() {}.type
@@ -124,7 +124,7 @@ class CrowdActivity : AppCompatActivity() {
     }
 
     private fun saveData() {
-        val sPref = getSharedPreferences("stop",Context.MODE_PRIVATE)
+        val sPref = getSharedPreferences("stop", Context.MODE_PRIVATE)
         val usersJson = Gson().toJson(users)
         usersJson?.let {
             with(sPref!!.edit()) {
