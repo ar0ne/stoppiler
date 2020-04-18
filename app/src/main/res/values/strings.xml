@@ -44,6 +44,8 @@
     <string name="egg.icon">&#xf7fb;</string>
     <string name="fish.icon">&#xf578;</string>
     <string name="pizza.icon">&#xf818;</string>
+    <string name="github.icon">&#xf09b;</string>
+    <string name="github.link">https://github.com/ar0ne/stoppiler</string>
     <string name="help.title">Help</string>
     <string name="help.text">TBD</string>
     <string name="product.volume.pattern">%d %s</string>

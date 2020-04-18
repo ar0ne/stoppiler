@@ -31,6 +31,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/help_title" />
 
+    <com.ar0ne.stoppiler.ui.BrandsFontAwesomeTextView
+        android:id="@+id/github_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:onClick="onButtonGithubClicked"
+        android:padding="8dp"
+        android:text="@string/github.icon"
+        android:textSize="26sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/help_btn_back" />
+
     <ScrollView
         android:id="@+id/help_scroll_view"
         android:layout_width="fill_parent"
@@ -58,4 +70,6 @@
             app:layout_constraintTop_toBottomOf="@+id/help_title" />
 
     </ScrollView>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
