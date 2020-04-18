@@ -14,6 +14,10 @@ import com.ar0ne.stoppiler.ui.SolidFontAwesomeTextView
 class StockAdapter(var stock: Stock, val callback: Callback, val removeCallback: Callback) :
     RecyclerView.Adapter<StockAdapter.MainHolder>() {
 
+    interface Callback {
+        fun onItemClicked(record: StockRecord)
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = MainHolder(
         LayoutInflater.from(parent.context).inflate(
             R.layout.goods_item,
@@ -37,46 +41,37 @@ class StockAdapter(var stock: Stock, val callback: Callback, val removeCallback:
 
         fun bind(record: StockRecord) {
             productName.text = record.goods.name
-            productVolume.text = "${record.volume} ${record.goods.unit.repr}"
+            productVolume.text = itemView.resources.getString(
+                R.string.product_volume_pattern,
+                record.volume, record.goods.unit.repr)
             productPhoto.text = getStockRecordIcon(itemView, record)
 
             itemView.setOnClickListener {
-                if (adapterPosition != RecyclerView.NO_POSITION) callback.onItemClicked(
-                    stock.getRecord(
-                        adapterPosition
+                if (adapterPosition != RecyclerView.NO_POSITION) {
+                    callback.onItemClicked(
+                        stock.getRecord(adapterPosition)
                     )
-                )
+                }
             }
 
             btnRemove.setOnClickListener {
-                if (adapterPosition != RecyclerView.NO_POSITION) removeCallback.onItemClicked(
-                    stock.getRecord(
-                        adapterPosition
+                if (adapterPosition != RecyclerView.NO_POSITION) {
+                    removeCallback.onItemClicked(
+                        stock.getRecord(adapterPosition)
                     )
-                )
+                }
             }
         }
     }
 
     fun getStockRecordIcon(view: View, record: StockRecord): String {
-        val resourceId = record.goods.iconResourceId
-        if (resourceId != null) {
-            return view.resources.getString(resourceId)
+        record.goods.iconResourceId?.let {
+            return view.resources.getString(it)
         }
         return when (record.goods.type) {
-            GoodsType.FOOD -> {
-                view.resources.getString(R.string.food_icon)
-            }
-            GoodsType.WATER -> {
-                view.resources.getString(R.string.water_icon)
-            }
-            GoodsType.TOILET_PAPER -> {
-                view.resources.getString(R.string.toilet_paper_icon)
-            }
+            GoodsType.FOOD -> view.resources.getString(R.string.food_icon)
+            GoodsType.WATER -> view.resources.getString(R.string.water_icon)
+            GoodsType.TOILET_PAPER -> view.resources.getString(R.string.toilet_paper_icon)
         }
-    }
-
-    interface Callback {
-        fun onItemClicked(record: StockRecord)
     }
 }
