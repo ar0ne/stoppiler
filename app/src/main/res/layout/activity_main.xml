@@ -18,6 +18,34 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <com.ar0ne.stoppiler.ui.SolidFontAwesomeTextView
+        android:id="@+id/main_btn_help"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:onClick="onButtonOpenHelpClicked"
+        android:padding="8dp"
+        android:text="@string/question.icon"
+        android:textSize="21sp"
+        app:layout_constraintBottom_toBottomOf="@+id/main_title"
+        app:layout_constraintEnd_toStartOf="@+id/main_btn_crowd"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.ar0ne.stoppiler.ui.SolidFontAwesomeTextView
+        android:id="@+id/main_btn_crowd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:onClick="onButtonOpenCrowdClicked"
+        android:padding="8dp"
+        android:text="@string/human.icon"
+        android:textSize="21sp"
+        app:layout_constraintBottom_toBottomOf="@+id/main_title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <androidx.cardview.widget.CardView
         android:id="@+id/main_card_view"
         android:layout_width="match_parent"
@@ -126,14 +154,17 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/main_goods_recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="700dp"
+        android:layout_height="0dp"
         android:padding="8dp"
         android:scrollbars="vertical"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintTop_toBottomOf="@+id/main_card_view"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/main_card_view" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        />
+
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/main_add_goods"
@@ -146,34 +177,6 @@
         android:src="@drawable/ic_add_white_24dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
-
-    <com.ar0ne.stoppiler.ui.SolidFontAwesomeTextView
-        android:id="@+id/main_btn_help"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
-        android:onClick="onButtonOpenHelpClicked"
-        android:padding="8dp"
-        android:text="@string/question.icon"
-        android:textSize="21sp"
-        app:layout_constraintBottom_toBottomOf="@+id/main_title"
-        app:layout_constraintEnd_toStartOf="@+id/main_btn_crowd"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <com.ar0ne.stoppiler.ui.SolidFontAwesomeTextView
-        android:id="@+id/main_btn_crowd"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:onClick="onButtonOpenCrowdClicked"
-        android:padding="8dp"
-        android:text="@string/human.icon"
-        android:textSize="21sp"
-        app:layout_constraintBottom_toBottomOf="@+id/main_title"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
