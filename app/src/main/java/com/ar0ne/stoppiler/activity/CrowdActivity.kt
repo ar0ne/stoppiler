@@ -11,7 +11,7 @@ import com.ar0ne.stoppiler.domain.Sex
 import com.ar0ne.stoppiler.domain.User
 import kotlinx.android.synthetic.main.activity_crowd.*
 import com.ar0ne.stoppiler.R
-import com.ar0ne.stoppiler.storage.UserDataStorage
+import com.ar0ne.stoppiler.storage.AppDataStorage
 import org.koin.core.KoinComponent
 import org.koin.core.inject
 
@@ -24,14 +24,14 @@ class CrowdActivity : AppCompatActivity(), KoinComponent {
 
     private lateinit var crowdAdapter: CrowdAdapter
 
-    private val userService by inject<UserDataStorage>()
+    private val appService by inject<AppDataStorage>()
     private var users: MutableList<User> = mutableListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_crowd)
 
-        users = userService.getUsers().toMutableList()
+        users = appService.getUsers().toMutableList()
 
         crowdAdapter = CrowdAdapter(
             this,
@@ -104,7 +104,7 @@ class CrowdActivity : AppCompatActivity(), KoinComponent {
         finish()
     }
 
-    private fun saveUsers() = userService.setUsers(users)
+    private fun saveUsers() = appService.setUsers(users)
 
     private fun isNextButtonEnabled(): Boolean = users.size > 0
 }

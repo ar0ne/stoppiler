@@ -11,16 +11,29 @@ import android.widget.SearchView
 import com.ar0ne.stoppiler.R
 import com.ar0ne.stoppiler.adapter.GoodsSearchAdapter
 import com.ar0ne.stoppiler.domain.*
+import com.ar0ne.stoppiler.storage.AppDataStorage
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_goods.*
+import org.koin.android.ext.android.inject
+import org.koin.core.KoinComponent
 
-class GoodsActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
+class GoodsActivity : AppCompatActivity(), SearchView.OnQueryTextListener, KoinComponent {
 
     private var goodsSearchAdapter: GoodsSearchAdapter? = null
 
+    private val appService by inject<AppDataStorage>()
+
+
     companion object {
         var goods = mutableListOf(
-            Goods("Toilet Paper", GoodsType.TOILET_PAPER, 1.94, Units.METER, Priority.HIGH, R.string.toilet_paper_icon),
+            Goods(
+                "Toilet Paper",
+                GoodsType.TOILET_PAPER,
+                1.94,
+                Units.METER,
+                Priority.HIGH,
+                R.string.toilet_paper_icon
+            ),
 
             Goods("Buckwheat Cereal", GoodsType.FOOD, 3.29, Units.GRAM, Priority.MEDIUM),
             Goods("Rice", GoodsType.FOOD, 3.3, Units.GRAM, Priority.MEDIUM),
@@ -35,7 +48,14 @@ class GoodsActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
             Goods("Chicken", GoodsType.FOOD, 1.6, Units.GRAM, Priority.MEDIUM),
             Goods("Pork", GoodsType.FOOD, 4.01, Units.GRAM, Priority.MEDIUM),
             Goods("Beef", GoodsType.FOOD, 1.91, Units.GRAM, Priority.MEDIUM),
-            Goods("Cheese", GoodsType.FOOD, 3.52, Units.GRAM, Priority.MEDIUM, R.string.cheese_icon),
+            Goods(
+                "Cheese",
+                GoodsType.FOOD,
+                3.52,
+                Units.GRAM,
+                Priority.MEDIUM,
+                R.string.cheese_icon
+            ),
             Goods("Carrot", GoodsType.FOOD, 0.29, Units.GRAM, Priority.LOW, R.string.carrot_icon),
             Goods("Tomato", GoodsType.FOOD, 0.12, Units.GRAM, Priority.LOW),
             Goods("Salad", GoodsType.FOOD, 0.15, Units.GRAM, Priority.LOW, R.string.seedling_icon),
@@ -117,18 +137,8 @@ class GoodsActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
         finish()
     }
 
-    private fun getUsersGoodsNames(): List<String> {
-        val sPref = getSharedPreferences("stop", Context.MODE_PRIVATE)
-        val stockJson: String? = sPref?.getString(MainActivity.STOCK_KEY, null)
-        if (stockJson != null) {
-            val stock = Gson().fromJson(stockJson, Stock::class.java)
-            return stock.getGoodsNames()
-        }
-        return listOf()
-    }
-
     private fun loadData() {
-        val usersGoods = getUsersGoodsNames()
+        val usersGoods = appService.getStock().getGoodsNames()
         filteredGoods = goods.filterNot {
             it.name in usersGoods
         }.toMutableList()

@@ -2,7 +2,6 @@ package com.ar0ne.stoppiler.activity
 
 import android.annotation.SuppressLint
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -12,8 +11,9 @@ import com.ar0ne.stoppiler.R
 import com.ar0ne.stoppiler.adapter.StockAdapter
 import com.ar0ne.stoppiler.di.appModules
 import com.ar0ne.stoppiler.domain.*
-import com.google.gson.Gson
+import com.ar0ne.stoppiler.storage.AppDataStorage
 import kotlinx.android.synthetic.main.activity_main.*
+import org.koin.android.ext.android.inject
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 import java.util.Collections.max
@@ -25,8 +25,7 @@ class MainActivity : AppCompatActivity() {
 
     lateinit var stock: Stock
     private lateinit var stockAdapter: StockAdapter
-//    private val userService by inject<UserDataStorage>()
-
+    private val appService by inject<AppDataStorage>()
 
     companion object {
         const val SHOW_INTRO_REQUEST = 1
@@ -34,9 +33,6 @@ class MainActivity : AppCompatActivity() {
         const val SHOW_GOODS_REQUEST = 7
         const val SHOW_UPDATE_GOODS_REQUEST = 9
         const val SHOW_HELP_REQUEST = 11
-
-        const val INTRO_SHOWN_KEY = "intro"
-        const val STOCK_KEY = "stock"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -153,8 +149,7 @@ class MainActivity : AppCompatActivity() {
             return
         }
 
-//        val users = userService.getUsers()
-        val users = mutableListOf<User>()
+        val users = appService.getUsers()
 
         val usersCaloriesDailyRate = users.sumByDouble {
             it.HarrisBenedictEquation().metabolicRate()
@@ -214,29 +209,13 @@ class MainActivity : AppCompatActivity() {
 
 
     private fun loadData() {
-        val sPref = getSharedPreferences("stop", Context.MODE_PRIVATE)
-        introShown = sPref?.getBoolean(INTRO_SHOWN_KEY, false) ?: false
-        val stockJson: String? = sPref?.getString(STOCK_KEY, null)
-        var savedStock: Stock? = null
-        if (stockJson != null) {
-            savedStock = Gson().fromJson(stockJson, Stock::class.java)
-        }
-        stock = savedStock ?: Stock()
+        introShown = appService.isIntroShown()
+        stock = appService.getStock()
     }
 
     private fun saveData() {
-        val sPref = getSharedPreferences("stop", Context.MODE_PRIVATE)
-        val stockJson = Gson().toJson(stock)
-        stockJson?.let {
-            with(sPref!!.edit()) {
-                putString(STOCK_KEY, it)
-                commit()
-            }
-        }
-        with(sPref!!.edit()) {
-            putBoolean(INTRO_SHOWN_KEY, introShown)
-            commit()
-        }
+        appService.setStock(stock)
+        appService.setIntroShown(introShown)
     }
 
 }
