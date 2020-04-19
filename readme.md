@@ -6,4 +6,4 @@ Nowaday, it might be quite challenging to figure out do you have enough stuff fo
 
 # Screenshot
 
-![pic](docs/screenshot.png)
+![pic](docs/screenshot.jpg)
