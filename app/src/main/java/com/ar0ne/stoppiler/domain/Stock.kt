@@ -32,17 +32,17 @@ class Stock(private var records: MutableList<StockRecord> = mutableListOf()) {
         return records.filter {
             it.goods.type == GoodsType.WATER
         }.sumBy { it.volume}
-            .div(dailyRate * 2.0)
+            .div(dailyRate)
     }
 
     fun getToiletPaperEstimation(dailyRate: Double): Double {
-        val records = records.filter {
+        val toiletPaper = records.filter {
             it.goods.type == GoodsType.TOILET_PAPER
         }
-        if (records.isEmpty()) {
+        if (toiletPaper.isEmpty()) {
             return 0.0
         }
-        return records.first().volume / (dailyRate * records.first().goods.calories)
+        return toiletPaper.first().volume / (dailyRate * toiletPaper.first().goods.calories)
     }
 
     fun getRecord(goodsName: String): StockRecord? {

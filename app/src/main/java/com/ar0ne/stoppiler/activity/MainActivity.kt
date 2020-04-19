@@ -140,21 +140,19 @@ class MainActivity : AppCompatActivity() {
 
     @SuppressLint("SetTextI18n")
     fun updateEstimations() {
-        if (stock.isEmpty) {
+        val users = appService.getUsers()
+
+        if (stock.isEmpty || users.isEmpty()) {
+            drawEstimations()
             return
         }
-
-        val users = appService.getUsers()
 
         val usersCaloriesDailyRate = users.sumByDouble {
             it.HarrisBenedictEquation().metabolicRate()
         }
-        val usersWaterDailyRate = users.size.toDouble()
-        val userToiletPaperDailyRate = users.size.toDouble()
-
         val foodEstimationInDays = stock.getFoodEstimation(usersCaloriesDailyRate)
-        val waterEstimationInDays = stock.getWaterEstimation(usersWaterDailyRate)
-        val paperEstimationInDays = stock.getToiletPaperEstimation(userToiletPaperDailyRate)
+        val waterEstimationInDays = stock.getWaterEstimation(users.size * 2.0)
+        val paperEstimationInDays = stock.getToiletPaperEstimation(users.size.toDouble())  // @TODO: fix this
 
         val max = max(listOf(foodEstimationInDays, waterEstimationInDays, paperEstimationInDays))
 
@@ -166,6 +164,14 @@ class MainActivity : AppCompatActivity() {
         water_progressBar.setProgress(waterEstimationInDays.toInt(), true)
         toiletPaper_progressBar.setProgress(paperEstimationInDays.toInt(), true)
 
+        drawEstimations(foodEstimationInDays, waterEstimationInDays, paperEstimationInDays)
+    }
+
+    private fun drawEstimations(
+        foodEstimationInDays: Double = 0.0,
+        waterEstimationInDays: Double = 0.0,
+        paperEstimationInDays: Double = 0.0
+    ) {
         val notAvailable = resources.getString(R.string.estimation_not_available)
         food_estimation.text =
             if (foodEstimationInDays > 0) resources.getString(
