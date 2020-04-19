@@ -18,14 +18,14 @@ import kotlinx.android.synthetic.main.crowd_add_person.*
 
 class CrowdAddWindow : PopupWindow(), CompoundButton.OnCheckedChangeListener {
 
-    override fun initViews(main: View?, background: View?) {
+    override fun setupViews() {
         mainView = crowd_add_person_view_with_border
         backgroundView = crowd_add_person_background
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
         setContentView(R.layout.crowd_add_person)
+        super.onCreate(savedInstanceState)
 
         crowd_person_sex_switch.setOnCheckedChangeListener(this)
 

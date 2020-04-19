@@ -18,15 +18,17 @@ abstract class PopupWindow : AppCompatActivity() {
 
     private var darkStatusBar = true
 
-    var mainView: View? = null
-    var backgroundView: View? = null
+    lateinit var mainView: View
+    lateinit var backgroundView: View
 
+    // set up main and background views
+    abstract fun setupViews()
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        initViews(mainView, backgroundView)
-
         super.onCreate(savedInstanceState)
         overridePendingTransition(0, 0)
+
+        setupViews()
 
         if (darkStatusBar) {
             this.window.decorView.systemUiVisibility =
@@ -41,13 +43,13 @@ abstract class PopupWindow : AppCompatActivity() {
         val colorAnimation = ValueAnimator.ofObject(ArgbEvaluator(), Color.TRANSPARENT, alphaColor)
         colorAnimation.duration = 500 // milliseconds
         colorAnimation.addUpdateListener { animator ->
-            backgroundView?.setBackgroundColor(animator.animatedValue as Int)
+            backgroundView.setBackgroundColor(animator.animatedValue as Int)
         }
         colorAnimation.start()
 
         // Fade animation for the Popup Window
-        mainView?.alpha = 0f
-        mainView?.apply {
+        mainView.alpha = 0f
+        mainView.apply {
             animate().alpha(1f).setDuration(500).setInterpolator(
                 DecelerateInterpolator()
             ).start()
@@ -74,7 +76,7 @@ abstract class PopupWindow : AppCompatActivity() {
         val colorAnimation = ValueAnimator.ofObject(ArgbEvaluator(), alphaColor, Color.TRANSPARENT)
         colorAnimation.duration = 500 // milliseconds
         colorAnimation.addUpdateListener { animator ->
-            backgroundView?.setBackgroundColor(
+            backgroundView.setBackgroundColor(
                 animator.animatedValue as Int
             )
         }
@@ -93,7 +95,5 @@ abstract class PopupWindow : AppCompatActivity() {
         })
         colorAnimation.start()
     }
-
-    abstract fun initViews(main: View?, background: View?)
 
 }

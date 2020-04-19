@@ -14,14 +14,14 @@ import kotlinx.android.synthetic.main.goods_item_popup.*
 
 class GoodsItemWindow : PopupWindow() {
 
-    override fun initViews(main: View?, background: View?) {
+    override fun setupViews() {
         mainView = goods_add_product_view_with_border
         backgroundView = goods_add_product_background
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
         setContentView(R.layout.goods_item_popup)
+        super.onCreate(savedInstanceState)
 
         intent.getStringExtra(EXTRA_GOODS_UNIT)?.let {
             add_product_unit.text = it
