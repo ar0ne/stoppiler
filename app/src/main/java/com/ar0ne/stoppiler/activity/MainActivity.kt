@@ -40,10 +40,12 @@ class MainActivity : AppCompatActivity() {
         }
 
         introShown = appService.isIntroShown()
+        if (!introShown) {
+            val intent = Intent(this, IntroActivity::class.java)
+            startActivityForResult(intent, Const.SHOW_INTRO_REQUEST)
+        }
+
         stock = appService.getStock()
-
-        saveData()
-
         stockAdapter = StockAdapter(
             stock,
             object : StockAdapter.Callback {
@@ -54,16 +56,9 @@ class MainActivity : AppCompatActivity() {
             })
 
         main_goods_recycler_view.adapter = stockAdapter
-
-        updateEstimations()
-
-        if (!introShown) {
-            val intent = Intent(this, IntroActivity::class.java)
-            startActivityForResult(intent, Const.SHOW_INTRO_REQUEST)
-        }
-
         main_goods_recycler_view.setHasFixedSize(true)
 
+        updateEstimations()
     }
 
     override fun onResume() {
@@ -73,7 +68,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onStop() {
         super.onStop()
-        saveData()
+        appService.setStock(stock)
     }
 
 
@@ -81,6 +76,7 @@ class MainActivity : AppCompatActivity() {
         when (requestCode) {
             Const.SHOW_INTRO_REQUEST -> {
                 introShown = true
+                appService.setIntroShown(introShown)
             }
             Const.SHOW_GOODS_REQUEST -> {
                 if (resultCode == Activity.RESULT_OK) {
@@ -90,6 +86,7 @@ class MainActivity : AppCompatActivity() {
                         val product: Goods? = goodsSamplesService.getSamples().find { it.name == productName }
                         product?.apply {
                             stock.addRecord(this, productVolume)
+                            appService.setStock(stock)
                             stockAdapter.notifyDataSetChanged()
                         }
                     }
@@ -104,13 +101,13 @@ class MainActivity : AppCompatActivity() {
                             this.volume = productVolume
                             stockAdapter.notifyDataSetChanged()
                         }
+                        appService.setStock(stock)
                     }
                 }
             }
             Const.SHOW_CROWD_REQUEST -> {
             }
         }
-        saveData()
         updateEstimations()
     }
 
@@ -200,17 +197,12 @@ class MainActivity : AppCompatActivity() {
             setPositiveButton(android.R.string.yes) { _, _ ->
                 stock.removeRecord(record)
                 stockAdapter.notifyDataSetChanged()
-                saveData()
+                appService.setStock(stock)
                 updateEstimations()
             }
             setNegativeButton(android.R.string.no) { _, _ -> }
             show()
         }
-    }
-
-    private fun saveData() {
-        appService.setStock(stock)
-        appService.setIntroShown(introShown)
     }
 
 }
