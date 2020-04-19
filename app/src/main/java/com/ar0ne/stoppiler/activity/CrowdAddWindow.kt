@@ -7,19 +7,16 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import android.widget.CompoundButton
+import com.ar0ne.stoppiler.Const.EXTRA_PERSON_AGE
+import com.ar0ne.stoppiler.Const.EXTRA_PERSON_HEIGHT
+import com.ar0ne.stoppiler.Const.EXTRA_PERSON_NAME
+import com.ar0ne.stoppiler.Const.EXTRA_PERSON_SEX
+import com.ar0ne.stoppiler.Const.EXTRA_PERSON_WEIGHT
 import com.ar0ne.stoppiler.R
 import com.ar0ne.stoppiler.domain.Sex
 import kotlinx.android.synthetic.main.crowd_add_person.*
 
 class CrowdAddWindow : PopupWindow(), CompoundButton.OnCheckedChangeListener {
-
-    companion object {
-        const val EXTRA_PERSON_NAME = "person_name"
-        const val EXTRA_PERSON_AGE = "person_age"
-        const val EXTRA_PERSON_SEX = "person_sex"
-        const val EXTRA_PERSON_WEIGHT = "person_weight"
-        const val EXTRA_PERSON_HEIGHT = "person_height"
-    }
 
     override fun initViews(main: View?, background: View?) {
         mainView = crowd_add_person_view_with_border

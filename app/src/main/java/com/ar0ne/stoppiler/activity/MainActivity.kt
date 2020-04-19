@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import com.ar0ne.stoppiler.Const
 import com.ar0ne.stoppiler.R
 import com.ar0ne.stoppiler.adapter.StockAdapter
 import com.ar0ne.stoppiler.di.appModules
@@ -21,19 +22,11 @@ import java.util.Collections.max
 
 class MainActivity : AppCompatActivity() {
 
-    private var introShown = false
-
-    lateinit var stock: Stock
+    private var introShown: Boolean = false
+    private lateinit var stock: Stock
     private lateinit var stockAdapter: StockAdapter
     private val appService by inject<AppDataStorage>()
 
-    companion object {
-        const val SHOW_INTRO_REQUEST = 1
-        const val SHOW_CROWD_REQUEST = 4
-        const val SHOW_GOODS_REQUEST = 7
-        const val SHOW_UPDATE_GOODS_REQUEST = 9
-        const val SHOW_HELP_REQUEST = 11
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,7 +37,9 @@ class MainActivity : AppCompatActivity() {
             modules(appModules)
         }
 
-        loadData()
+        introShown = appService.isIntroShown()
+        stock = appService.getStock()
+
         saveData()
 
         stockAdapter = StockAdapter(
@@ -62,7 +57,7 @@ class MainActivity : AppCompatActivity() {
 
         if (!introShown) {
             val intent = Intent(this, IntroActivity::class.java)
-            startActivityForResult(intent, SHOW_INTRO_REQUEST)
+            startActivityForResult(intent, Const.SHOW_INTRO_REQUEST)
         }
 
         main_goods_recycler_view.setHasFixedSize(true)
@@ -82,13 +77,13 @@ class MainActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         when (requestCode) {
-            SHOW_INTRO_REQUEST -> {
+            Const.SHOW_INTRO_REQUEST -> {
                 introShown = true
             }
-            SHOW_GOODS_REQUEST -> {
+            Const.SHOW_GOODS_REQUEST -> {
                 if (resultCode == Activity.RESULT_OK) {
-                    val productName = data?.getStringExtra(GoodsActivity.EXTRA_GOODS_NAME)
-                    val productVolume = data?.getIntExtra(GoodsActivity.EXTRA_GOODS_VOLUME, 0)
+                    val productName = data?.getStringExtra(Const.EXTRA_GOODS_NAME)
+                    val productVolume = data?.getIntExtra(Const.EXTRA_GOODS_VOLUME, 0)
                     if (productName != null && productVolume != null && productVolume > 0) {
                         // @todo: get data from dataSource
                         val product: Goods? = GoodsActivity.goods.find { it.name == productName }
@@ -99,10 +94,10 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
             }
-            SHOW_UPDATE_GOODS_REQUEST -> {
+            Const.SHOW_UPDATE_GOODS_REQUEST -> {
                 if (resultCode == Activity.RESULT_OK) {
-                    val productName = data?.getStringExtra(GoodsActivity.EXTRA_GOODS_NAME)
-                    val productVolume = data?.getIntExtra(GoodsActivity.EXTRA_GOODS_VOLUME, 0)
+                    val productName = data?.getStringExtra(Const.EXTRA_GOODS_NAME)
+                    val productVolume = data?.getIntExtra(Const.EXTRA_GOODS_VOLUME, 0)
                     if (productName != null && productVolume != null && productVolume > 0) {
                         // @todo: get data from dataSource
                         stock.getRecord(productName)?.apply {
@@ -112,7 +107,7 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
             }
-            SHOW_CROWD_REQUEST -> {
+            Const.SHOW_CROWD_REQUEST -> {
             }
         }
         saveData()
@@ -122,25 +117,25 @@ class MainActivity : AppCompatActivity() {
 
     fun onButtonOpenCrowdClicked(view: View) {
         val intent = Intent(this, CrowdActivity::class.java)
-        startActivityForResult(intent, SHOW_CROWD_REQUEST)
+        startActivityForResult(intent, Const.SHOW_CROWD_REQUEST)
     }
 
     fun onButtonAddGoodsClicked(view: View) {
         val intent = Intent(this, GoodsActivity::class.java)
-        startActivityForResult(intent, SHOW_GOODS_REQUEST)
+        startActivityForResult(intent, Const.SHOW_GOODS_REQUEST)
     }
 
     fun onButtonOpenHelpClicked(view: View) {
         val intent = Intent(this, HelpActivity::class.java)
-        startActivityForResult(intent, SHOW_HELP_REQUEST)
+        startActivityForResult(intent, Const.SHOW_HELP_REQUEST)
     }
 
     fun showUpdateProductView(record: StockRecord) {
         val intent = Intent(this, GoodsItemWindow::class.java)
-        intent.putExtra(GoodsActivity.EXTRA_GOODS_NAME, record.goods.name)
-        intent.putExtra(GoodsActivity.EXTRA_GOODS_UNIT, record.goods.unit.repr)
-        intent.putExtra(GoodsActivity.EXTRA_GOODS_VOLUME, record.volume)
-        startActivityForResult(intent, SHOW_UPDATE_GOODS_REQUEST)
+        intent.putExtra(Const.EXTRA_GOODS_NAME, record.goods.name)
+        intent.putExtra(Const.EXTRA_GOODS_UNIT, record.goods.unit.repr)
+        intent.putExtra(Const.EXTRA_GOODS_VOLUME, record.volume)
+        startActivityForResult(intent, Const.SHOW_UPDATE_GOODS_REQUEST)
     }
 
     @SuppressLint("SetTextI18n")
@@ -205,12 +200,6 @@ class MainActivity : AppCompatActivity() {
             setNegativeButton(android.R.string.no) { dialog, which -> }
             show()
         }
-    }
-
-
-    private fun loadData() {
-        introShown = appService.isIntroShown()
-        stock = appService.getStock()
     }
 
     private fun saveData() {

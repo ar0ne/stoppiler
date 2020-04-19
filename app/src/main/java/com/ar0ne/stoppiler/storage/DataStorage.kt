@@ -5,6 +5,7 @@ import com.ar0ne.stoppiler.domain.User
 import com.google.gson.GsonBuilder
 import java.lang.reflect.Type
 
+// Combined all repositories in one place for simplicity
 interface DataStorage {
 
     companion object {

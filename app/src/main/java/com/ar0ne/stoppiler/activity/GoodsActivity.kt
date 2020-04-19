@@ -8,6 +8,10 @@ import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import android.widget.SearchView
+import com.ar0ne.stoppiler.Const.EXTRA_GOODS_NAME
+import com.ar0ne.stoppiler.Const.EXTRA_GOODS_UNIT
+import com.ar0ne.stoppiler.Const.EXTRA_GOODS_VOLUME
+import com.ar0ne.stoppiler.Const.SHOW_ADD_GOODS_REQUEST
 import com.ar0ne.stoppiler.R
 import com.ar0ne.stoppiler.adapter.GoodsSearchAdapter
 import com.ar0ne.stoppiler.domain.*
@@ -69,11 +73,6 @@ class GoodsActivity : AppCompatActivity(), SearchView.OnQueryTextListener, KoinC
         )
         var filteredGoods: MutableList<Goods>? = null
 
-
-        const val SHOW_ADD_GOODS_REQUEST = 8
-        const val EXTRA_GOODS_NAME = "name"
-        const val EXTRA_GOODS_UNIT = "unit"
-        const val EXTRA_GOODS_VOLUME = "volume"
     }
 
     override fun onResume() {

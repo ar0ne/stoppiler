@@ -14,7 +14,6 @@ class AppDataStorage(context: Context) : DataStorage {
         const val STORAGE = "com.ar0ne.stoppiler.STORAGE"
         const val USERS = "com.ar0ne.stoppiler.USERS"
         const val INTRO_SHOWN = "com.ar0ne.stoppiler.INTRO_SHOWN"
-        const val CROWD = "com.ar0ne.stoppiler.CROWD"
         const val STOCK = "com.ar0ne.stoppiler.STOCK"
     }
 

@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AlertDialog
+import com.ar0ne.stoppiler.Const
 import com.ar0ne.stoppiler.adapter.CrowdAdapter
 import com.ar0ne.stoppiler.domain.Sex
 import com.ar0ne.stoppiler.domain.User
@@ -17,10 +18,6 @@ import org.koin.core.inject
 
 
 class CrowdActivity : AppCompatActivity(), KoinComponent {
-
-    companion object {
-        const val ADD_PERSON_REQUEST = 3
-    }
 
     private lateinit var crowdAdapter: CrowdAdapter
 
@@ -53,18 +50,18 @@ class CrowdActivity : AppCompatActivity(), KoinComponent {
 
     fun onAddPersonClicked(view: View) {
         val intent = Intent(this, CrowdAddWindow::class.java)
-        startActivityForResult(intent, ADD_PERSON_REQUEST)
+        startActivityForResult(intent, Const.ADD_PERSON_REQUEST)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == ADD_PERSON_REQUEST) {
+        if (requestCode == Const.ADD_PERSON_REQUEST) {
             if (resultCode == Activity.RESULT_OK) {
-                val name: String = data?.getStringExtra(CrowdAddWindow.EXTRA_PERSON_NAME) ?: return
-                val extraSex = data.getStringExtra(CrowdAddWindow.EXTRA_PERSON_SEX) ?: return
+                val name: String = data?.getStringExtra(Const.EXTRA_PERSON_NAME) ?: return
+                val extraSex = data.getStringExtra(Const.EXTRA_PERSON_SEX) ?: return
 
-                val extraAge = data.getIntExtra(CrowdAddWindow.EXTRA_PERSON_AGE, 0)
-                val extraWeight = data.getIntExtra(CrowdAddWindow.EXTRA_PERSON_WEIGHT, 0)
-                val extraHeight = data.getIntExtra(CrowdAddWindow.EXTRA_PERSON_HEIGHT, 0)
+                val extraAge = data.getIntExtra(Const.EXTRA_PERSON_AGE, 0)
+                val extraWeight = data.getIntExtra(Const.EXTRA_PERSON_WEIGHT, 0)
+                val extraHeight = data.getIntExtra(Const.EXTRA_PERSON_HEIGHT, 0)
 
                 // @TODO: default value based on sex ?
                 val weight: Int = if (extraWeight > 0) extraWeight else 70
@@ -100,7 +97,7 @@ class CrowdActivity : AppCompatActivity(), KoinComponent {
 
     fun onButtonNextClicked(view: View) {
         val result = Intent()
-        setResult(MainActivity.SHOW_INTRO_REQUEST, result)
+        setResult(Const.SHOW_INTRO_REQUEST, result)
         finish()
     }
 

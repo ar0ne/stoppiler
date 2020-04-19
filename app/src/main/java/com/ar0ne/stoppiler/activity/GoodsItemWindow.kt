@@ -6,6 +6,9 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
+import com.ar0ne.stoppiler.Const.EXTRA_GOODS_NAME
+import com.ar0ne.stoppiler.Const.EXTRA_GOODS_UNIT
+import com.ar0ne.stoppiler.Const.EXTRA_GOODS_VOLUME
 import com.ar0ne.stoppiler.R
 import kotlinx.android.synthetic.main.goods_item_popup.*
 
@@ -20,13 +23,13 @@ class GoodsItemWindow : PopupWindow() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.goods_item_popup)
 
-        intent.getStringExtra(GoodsActivity.EXTRA_GOODS_UNIT)?.let {
+        intent.getStringExtra(EXTRA_GOODS_UNIT)?.let {
             add_product_unit.text = it
         }
-        intent.getStringExtra(GoodsActivity.EXTRA_GOODS_NAME)?.let {
+        intent.getStringExtra(EXTRA_GOODS_NAME)?.let {
             goods_product_name.text = it
         }
-        intent.getIntExtra(GoodsActivity.EXTRA_GOODS_VOLUME, 0).let {
+        intent.getIntExtra(EXTRA_GOODS_VOLUME, 0).let {
             if (it > 0) {
                 add_product_volume.setText(it.toString())
             }
@@ -47,8 +50,8 @@ class GoodsItemWindow : PopupWindow() {
         val result = Intent()
         val volume = add_product_volume.text.toString().toInt()
         val product = goods_product_name.text.toString()
-        result.putExtra(GoodsActivity.EXTRA_GOODS_VOLUME, volume)
-        result.putExtra(GoodsActivity.EXTRA_GOODS_NAME, product)
+        result.putExtra(EXTRA_GOODS_VOLUME, volume)
+        result.putExtra(EXTRA_GOODS_NAME, product)
         setResult(Activity.RESULT_OK, result)
         finish()
     }
