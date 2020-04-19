@@ -41,6 +41,7 @@ class GoodsActivity : AppCompatActivity(), SearchView.OnQueryTextListener, KoinC
         filteredGoods = goods.filterNot {
             it.name in usersGoods
         }.toMutableList()
+        filteredGoods.sortBy { it.name.toLowerCase() }
 
         goodsSearchAdapter = GoodsSearchAdapter(this, filteredGoods as ArrayList<Goods>)
 
