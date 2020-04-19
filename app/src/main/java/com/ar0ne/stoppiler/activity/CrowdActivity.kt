@@ -1,9 +1,7 @@
 package com.ar0ne.stoppiler.activity
 
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -13,33 +11,27 @@ import com.ar0ne.stoppiler.domain.Sex
 import com.ar0ne.stoppiler.domain.User
 import kotlinx.android.synthetic.main.activity_crowd.*
 import com.ar0ne.stoppiler.R
-import com.google.gson.Gson
-import com.google.gson.GsonBuilder
-import com.google.gson.reflect.TypeToken
-import java.lang.reflect.Type
+import com.ar0ne.stoppiler.storage.UserDataStorage
+import org.koin.core.KoinComponent
+import org.koin.core.inject
 
 
-class CrowdActivity : AppCompatActivity() {
+class CrowdActivity : AppCompatActivity(), KoinComponent {
 
     companion object {
         const val ADD_PERSON_REQUEST = 3
-        const val USERS_KEY = "users"
-
-        inline fun <reified T> parseArray(json: String, typeToken: Type): T {
-            val gson = GsonBuilder().create()
-            return gson.fromJson<T>(json, typeToken)
-        }
     }
 
     private lateinit var crowdAdapter: CrowdAdapter
 
+    private val userService by inject<UserDataStorage>()
     private var users: MutableList<User> = mutableListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_crowd)
 
-        loadData()
+        users = userService.getUsers().toMutableList()
 
         crowdAdapter = CrowdAdapter(
             this,
@@ -55,7 +47,7 @@ class CrowdActivity : AppCompatActivity() {
 
     override fun onStop() {
         super.onStop()
-        saveData()
+        saveUsers()
     }
 
 
@@ -85,7 +77,7 @@ class CrowdActivity : AppCompatActivity() {
                 users.add(user)
                 crowdAdapter.notifyDataSetChanged()
                 crowd_next.setEnabled(isNextButtonEnabled())
-                saveData()
+                saveUsers()
             }
         }
     }
@@ -112,27 +104,7 @@ class CrowdActivity : AppCompatActivity() {
         finish()
     }
 
-    private fun loadData() {
-        val sPref = getSharedPreferences("stop", Context.MODE_PRIVATE)
-        val usersJson: String? = sPref?.getString(USERS_KEY, null)
-        usersJson?.let {
-            val type = object : TypeToken<MutableList<User>>() {}.type
-            val result: MutableList<User> =
-                parseArray(json = it, typeToken = type)
-            users = result
-        }
-    }
-
-    private fun saveData() {
-        val sPref = getSharedPreferences("stop", Context.MODE_PRIVATE)
-        val usersJson = Gson().toJson(users)
-        usersJson?.let {
-            with(sPref!!.edit()) {
-                putString(USERS_KEY, it)
-                commit()
-            }
-        }
-    }
+    private fun saveUsers() = userService.setUsers(users)
 
     private fun isNextButtonEnabled(): Boolean = users.size > 0
 }

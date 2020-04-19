@@ -10,10 +10,12 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.ar0ne.stoppiler.R
 import com.ar0ne.stoppiler.adapter.StockAdapter
+import com.ar0ne.stoppiler.di.appModules
 import com.ar0ne.stoppiler.domain.*
 import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import kotlinx.android.synthetic.main.activity_main.*
+import org.koin.android.ext.koin.androidContext
+import org.koin.core.context.startKoin
 import java.util.Collections.max
 
 
@@ -23,6 +25,8 @@ class MainActivity : AppCompatActivity() {
 
     lateinit var stock: Stock
     private lateinit var stockAdapter: StockAdapter
+//    private val userService by inject<UserDataStorage>()
+
 
     companion object {
         const val SHOW_INTRO_REQUEST = 1
@@ -38,6 +42,11 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        startKoin {
+            androidContext(this@MainActivity)
+            modules(appModules)
+        }
 
         loadData()
         saveData()
@@ -144,7 +153,8 @@ class MainActivity : AppCompatActivity() {
             return
         }
 
-        val users = getUsers() ?: return
+//        val users = userService.getUsers()
+        val users = mutableListOf<User>()
 
         val usersCaloriesDailyRate = users.sumByDouble {
             it.HarrisBenedictEquation().metabolicRate()
@@ -229,15 +239,4 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun getUsers(): MutableList<User>? {
-        val sPref = getSharedPreferences("stop", Context.MODE_PRIVATE)
-        if (sPref.contains("users")) {
-            val usersJson: String? = sPref.getString("users", null)
-            if (usersJson != null) {
-                val type = object : TypeToken<MutableList<User>>() {}.type
-                return CrowdActivity.parseArray(json = usersJson, typeToken = type)
-            }
-        }
-        return mutableListOf()
-    }
 }
