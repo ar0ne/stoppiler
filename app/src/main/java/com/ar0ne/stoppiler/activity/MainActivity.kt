@@ -13,6 +13,7 @@ import com.ar0ne.stoppiler.adapter.StockAdapter
 import com.ar0ne.stoppiler.di.appModules
 import com.ar0ne.stoppiler.domain.*
 import com.ar0ne.stoppiler.storage.AppDataStorage
+import com.ar0ne.stoppiler.services.GoodsSamplesService
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.android.ext.android.inject
 import org.koin.android.ext.koin.androidContext
@@ -26,6 +27,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var stock: Stock
     private lateinit var stockAdapter: StockAdapter
     private val appService by inject<AppDataStorage>()
+    private val goodsSamplesService by inject<GoodsSamplesService>()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -85,8 +87,7 @@ class MainActivity : AppCompatActivity() {
                     val productName = data?.getStringExtra(Const.EXTRA_GOODS_NAME)
                     val productVolume = data?.getIntExtra(Const.EXTRA_GOODS_VOLUME, 0)
                     if (productName != null && productVolume != null && productVolume > 0) {
-                        // @todo: get data from dataSource
-                        val product: Goods? = GoodsActivity.goods.find { it.name == productName }
+                        val product: Goods? = goodsSamplesService.getSamples().find { it.name == productName }
                         product?.apply {
                             stock.addRecord(this, productVolume)
                             stockAdapter.notifyDataSetChanged()
@@ -99,7 +100,6 @@ class MainActivity : AppCompatActivity() {
                     val productName = data?.getStringExtra(Const.EXTRA_GOODS_NAME)
                     val productVolume = data?.getIntExtra(Const.EXTRA_GOODS_VOLUME, 0)
                     if (productName != null && productVolume != null && productVolume > 0) {
-                        // @todo: get data from dataSource
                         stock.getRecord(productName)?.apply {
                             this.volume = productVolume
                             stockAdapter.notifyDataSetChanged()
@@ -203,7 +203,7 @@ class MainActivity : AppCompatActivity() {
                 saveData()
                 updateEstimations()
             }
-            setNegativeButton(android.R.string.no) { dialog, which -> }
+            setNegativeButton(android.R.string.no) { _, _ -> }
             show()
         }
     }

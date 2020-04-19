@@ -23,6 +23,10 @@ class GoodsSearchAdapter(
         internal var name: TextView? = null
     }
 
+    override fun getItem(position: Int): Any = GoodsActivity.filteredGoods[position]
+    override fun getItemId(position: Int): Long = position.toLong()
+    override fun getCount(): Int = GoodsActivity.filteredGoods.size
+
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         var view = convertView
         val holder: ViewHolder
@@ -30,25 +34,13 @@ class GoodsSearchAdapter(
             holder = ViewHolder()
             view = inflater.inflate(R.layout.goods_search_item, null)
 
-            holder.name = view!!.findViewById(R.id.name) as TextView
+            holder.name = view?.findViewById(R.id.name) as TextView
             view.tag = holder
         } else {
             holder = view.tag as ViewHolder
         }
-        holder.name!!.text = GoodsActivity.filteredGoods!![position].name
+        holder.name?.text = GoodsActivity.filteredGoods[position].name
         return view
-    }
-
-    override fun getItem(position: Int): Any {
-        return GoodsActivity.filteredGoods!![position]
-    }
-
-    override fun getItemId(position: Int): Long {
-        return position.toLong()
-    }
-
-    override fun getCount(): Int {
-        return GoodsActivity.filteredGoods!!.size
     }
 
     fun filter(searchText: String) {
@@ -59,7 +51,7 @@ class GoodsSearchAdapter(
         } else {
             for (product in goodsList) {
                 if (product.name.toLowerCase(Locale.getDefault()).contains(loweredSearchText)) {
-                    GoodsActivity.filteredGoods?.add(product)
+                    GoodsActivity.filteredGoods.add(product)
                 }
             }
         }
